@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const ExpressError = require("./src/middlewares/AppError");
 // const Listing = require("./src/models/listing.model");
 
 //routes
@@ -19,6 +20,12 @@ mongoose
 
 //using routes
 app.use("/listing", listingRouter);
+
+//global error handler to catch the errors
+app.use((err, req, res, next) => {
+  let { statusCode = 500, message = "something went wrong" } = err;
+  res.status(statusCode).json({ message: message });
+});
 
 //listen
 app.listen(3000, () => {

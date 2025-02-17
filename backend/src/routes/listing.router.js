@@ -1,6 +1,7 @@
 const express = require("express");
 const Listing = require("../models/listing.model");
 const router = express.Router();
+const AppError = require("../middlewares/AppError");
 
 //get all listings
 router.get("/all", async (req, res) => {
@@ -8,25 +9,36 @@ router.get("/all", async (req, res) => {
   res.json(allListings);
 });
 //get all listings
-router.get("/:id", async (req, res) => {
-  let { id } = req.params;
-  const listing = await Listing.findById(id);
-  res.json(listing);
+router.get("/:id", async (req, res, next) => {
+  try {
+    let { id } = req.params;
+    const listing = await Listing.findById(id);
+    if (!listing) {
+      return next(new AppError(404, "Listing not found"));
+    }
+    res.json(listing);
+  } catch (err) {
+    return next(new AppError(400, "something went wrong"));
+  }
 });
 
 //add a listing
-router.post("/add", async (req, res) => {
-  const { title, description, image, price, location, country } = req.body;
-  let listing = new Listing({
-    title,
-    description,
-    price,
-    image,
-    location,
-    country,
-  });
-  await listing.save();
-  res.json(listing);
+router.post("/add", async (req, res, next) => {
+  try {
+    const { title, description, image, price, location, country } = req.body;
+    let listing = new Listing({
+      title,
+      description,
+      price,
+      image,
+      location,
+      country,
+    });
+    await listing.save();
+    res.json(listing);
+  } catch (err) {
+    return next(new AppError(400, "invalid data"));
+  }
 });
 
 //update a listing
