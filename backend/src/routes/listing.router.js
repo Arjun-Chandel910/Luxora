@@ -3,6 +3,8 @@ const Listing = require("../models/listing.model");
 const router = express.Router();
 const AppError = require("../middlewares/AppError");
 const { default: mongoose } = require("mongoose");
+const authMiddleware = require("../middlewares/jwt");
+const User = require("../models/user.model");
 
 // Get all listings
 router.get("/all", async (req, res, next) => {
@@ -39,8 +41,13 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // Add a listing
-router.post("/add", async (req, res, next) => {
+router.post("/add", authMiddleware, async (req, res, next) => {
   try {
+    const UserId = req.user.id || req.user._id;
+    const userF = await User.findById(UserId);
+    if (!userF) {
+      return next(new AppError(403, "InvalidUser"));
+    }
     const { title, description, image, price, location, country } = req.body;
     let listing = new Listing({
       title,
@@ -49,6 +56,7 @@ router.post("/add", async (req, res, next) => {
       image,
       location,
       country,
+      user: UserId,
     });
 
     await listing.save();

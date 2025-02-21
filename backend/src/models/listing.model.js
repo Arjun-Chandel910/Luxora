@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const UserSchema = mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -14,6 +14,11 @@ const UserSchema = mongoose.Schema({
   price: { type: Number, required: true },
   location: { type: String, required: true },
   country: { type: String, required: true },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   //   reviews: [
   //     {
   //       type: Schema.Types.ObjectId,
