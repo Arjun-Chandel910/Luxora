@@ -10,7 +10,7 @@ const authMiddleware = require("../middlewares/jwt");
 
 jwt = require("jsonwebtoken");
 
-router.post("/auth", async (req, res, next) => {
+router.post("/signup", async (req, res, next) => {
   let { name, email, password } = req.body;
 
   let checkUser = await User.findOne({ email: email });
@@ -51,6 +51,20 @@ router.post("/login", async (req, res, next) => {
   };
   const token = jwt.sign(JWT_DATA, "superPassword"); //change the secret later
   res.json({ token: token });
+});
+// delete user
+router.delete("/", authMiddleware, async (req, res, next) => {
+  try {
+    const UserId = req.user.id || req.user._id;
+    const userF = await User.findById(UserId);
+    if (!userF) {
+      return next(new AppError(403, "InvalidUser"));
+    }
+    const data = await User.findByIdAndDelete(UserId);
+    res.json({ deletedUser: data });
+  } catch (err) {
+    return next(new AppError(500, "Internal server error"));
+  }
 });
 
 module.exports = router;
