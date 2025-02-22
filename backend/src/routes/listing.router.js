@@ -18,9 +18,15 @@ router.get("/all", async (req, res, next) => {
 });
 
 // Get a listing by ID
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", authMiddleware, async (req, res, next) => {
   try {
     let { id } = req.params;
+    const UserId = req.user.id || req.user._id;
+    const userF = await User.findById(UserId);
+    if (!userF) {
+      return next(new AppError(403, "InvalidUser"));
+    }
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       // is error only checks the format of id , if the id is of some
       //  listing that previously existed than we need to check if the listing
@@ -68,8 +74,13 @@ router.post("/add", authMiddleware, async (req, res, next) => {
 });
 
 // Update a listing
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", authMiddleware, async (req, res, next) => {
   try {
+    const UserId = req.user.id || req.user._id;
+    const userF = await User.findById(UserId);
+    if (!userF) {
+      return next(new AppError(403, "InvalidUser"));
+    }
     let { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return next(new AppError(400, "Invalid ID "));
@@ -94,8 +105,13 @@ router.put("/:id", async (req, res, next) => {
 });
 
 // Delete a listing
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", authMiddleware, async (req, res, next) => {
   try {
+    const UserId = req.user.id || req.user._id;
+    const userF = await User.findById(UserId);
+    if (!userF) {
+      return next(new AppError(403, "InvalidUser"));
+    }
     let { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return next(new AppError(400, "Invalid ID"));
