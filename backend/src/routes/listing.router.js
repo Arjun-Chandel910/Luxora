@@ -1,10 +1,13 @@
 const express = require("express");
 const Listing = require("../models/listing.model");
+const Review = require("../models/review.model");
 const router = express.Router();
 const AppError = require("../middlewares/AppError");
 const { default: mongoose } = require("mongoose");
 const authMiddleware = require("../middlewares/jwt");
 const User = require("../models/user.model");
+
+//ROUTES FOR LISTINGS
 
 // Get all listings
 router.get("/all", async (req, res, next) => {
@@ -126,6 +129,51 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
   } catch (err) {
     console.error("Error:", err);
     return next(new AppError(500, err.message || "Internal Server Error"));
+  }
+});
+
+//Routes for review
+
+// create a review
+router.post("/:id/review", authMiddleware, async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const listing = await Listing.findById(id);
+    if (!listing) {
+      return next(new AppError(400, "listing does not exist."));
+    }
+    let { rating, comment } = req.body;
+    const review = new Review({ comment, rating });
+    await review.save(); //save review
+    // console.log(review);
+    listing.reviews.push(review); //push the review
+    await listing.save(); //save the listing also
+    res.json(review);
+  } catch (err) {
+    return next(new AppError(500, "Internal Server Error"));
+  }
+});
+// delete a review
+router.delete("/:id/review/:revid", authMiddleware, async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const listing = await Listing.findById(id);
+    if (!listing) {
+      return next(new AppError(400, "listing does not exist."));
+    }
+    const revid = req.params.revid;
+    const review = await Review.findByIdAndDelete(revid);
+    if (!review) {
+      return next(new AppError(404, "Review does not exist."));
+    }
+
+    listing.reviews = listing.reviews.filter((data) => {
+      return data._id.toString() != revid;
+    });
+    await listing.save();
+    res.json(review);
+  } catch (err) {
+    return next(new AppError(500, "Internal Server Error"));
   }
 });
 

@@ -1,11 +1,9 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const ExpressError = require("./src/middlewares/AppError");
-// const Listing = require("./src/models/listing.model");
 
-//routes
-const listingRouter = require("./src/routes/listing.router");
+//router
+const ListingRouter = require("./src/routes/listing.router");
 const UserRouter = require("./src/routes/auth.router");
 
 //middlewares
@@ -20,7 +18,7 @@ mongoose
   });
 
 //using routes
-app.use("/listing", listingRouter);
+app.use("/listing", ListingRouter);
 app.use("/api", UserRouter);
 
 //global error handler to catch the errors
