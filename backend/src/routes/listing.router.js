@@ -86,7 +86,7 @@ router.put("/:id", authMiddleware, async (req, res, next) => {
     }
     let { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return next(new AppError(400, "Invalid ID "));
+      return next(new AppError(404, "Invalid ID "));
     }
 
     const { title, description, image, price, location, country } = req.body;
@@ -140,7 +140,7 @@ router.post("/:id/review", authMiddleware, async (req, res, next) => {
     const id = req.params.id;
     const listing = await Listing.findById(id);
     if (!listing) {
-      return next(new AppError(400, "listing does not exist."));
+      return next(new AppError(404, "listing does not exist."));
     }
     let { rating, comment } = req.body;
     const review = new Review({ comment, rating });
@@ -159,7 +159,7 @@ router.delete("/:id/review/:revid", authMiddleware, async (req, res, next) => {
     const id = req.params.id;
     const listing = await Listing.findById(id);
     if (!listing) {
-      return next(new AppError(400, "listing does not exist."));
+      return next(new AppError(404, "listing does not exist."));
     }
     const revid = req.params.revid;
     const review = await Review.findByIdAndDelete(revid);

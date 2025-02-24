@@ -1,14 +1,14 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-
+const cors = require("cors");
 //router
 const ListingRouter = require("./src/routes/listing.router");
 const UserRouter = require("./src/routes/auth.router");
 
 //middlewares
 app.use(express.json());
-
+app.use(cors());
 //connect db
 mongoose
   .connect("mongodb://127.0.0.1:27017/Luxora")
