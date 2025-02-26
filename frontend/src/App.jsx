@@ -3,23 +3,25 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ListingState from "./context/listingState";
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
-
+import Divider from "@mui/material/Divider";
+import Listings from "./components/listings/listings";
 function App() {
   return (
     <>
       <ListingState>
-        <BrowserRouter>
-          <Navbar></Navbar>
-          <Routes>
-            <Route path="/">
-              {/* <Route index element={<Home />} />
-            <Route path="blogs" element={<Blogs />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="*" element={<NoPage />} /> */}
-            </Route>
-          </Routes>
-          <Footer></Footer>
-        </BrowserRouter>
+        <div className="flex flex-col min-h-screen">
+          <BrowserRouter>
+            <Navbar></Navbar>
+            <Divider></Divider>
+            <div className="flex-grow">
+              <Routes>
+                <Route path="/" element={<Listings />} />
+                {/* <Route path="*" element={<NoPage />} /> */}
+              </Routes>
+            </div>
+            <Footer></Footer>
+          </BrowserRouter>
+        </div>
       </ListingState>
     </>
   );
