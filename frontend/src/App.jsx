@@ -17,7 +17,7 @@ function App() {
             <div className="flex-grow">
               <Routes>
                 <Route path="/" element={<Listings />} />
-                <Route path="/card" element={<SingleCard />} />
+                <Route path="/:id" element={<SingleCard />} />
               </Routes>
             </div>
             <Footer></Footer>

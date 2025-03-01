@@ -24,7 +24,7 @@ export default function Cards({ data }) {
           {listing.description}
         </Typography>
 
-        <Link to={{ pathname: "/card" }}>
+        <Link to={{ pathname: `/${listing._id}` }}>
           {" "}
           <Button variant="contained">Details</Button>
         </Link>

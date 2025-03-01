@@ -7,8 +7,17 @@ const ListingState = ({ children }) => {
     const data = await response.json();
     return data;
   };
+
+  const getSingleListing = async (id) => {
+    const response = await fetch(`http://localhost:3000/listing/${id}`, {
+      method: "GET",
+    });
+    const data = await response.json();
+    return data;
+  };
+
   return (
-    <ListingContext.Provider value={{ getListings }}>
+    <ListingContext.Provider value={{ getListings, getSingleListing }}>
       {children}
     </ListingContext.Provider>
   );

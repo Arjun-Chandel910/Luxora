@@ -21,14 +21,14 @@ router.get("/all", async (req, res, next) => {
 });
 
 // Get a listing by ID
-router.get("/:id", authMiddleware, async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     let { id } = req.params;
-    const UserId = req.user.id || req.user._id;
-    const userF = await User.findById(UserId);
-    if (!userF) {
-      return next(new AppError(403, "InvalidUser"));
-    }
+    // const UserId = req.user.id || req.user._id;
+    // const userF = await User.findById(UserId);
+    // if (!userF) {
+    //   return next(new AppError(403, "InvalidUser"));
+    // }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       // is error only checks the format of id , if the id is of some
