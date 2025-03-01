@@ -17,15 +17,9 @@ const Listings = () => {
 
   return (
     <>
-      <div className="flex justify-evenly gap-4 p-4 flex-wrap">
+      <div className="flex justify-evenly gap-4 p-4 flex-row  flex-wrap my-8">
         {listings.map((listing) => {
-          return (
-            <div className="w-1/5">
-              {" "}
-              {/* Ensures exactly 4 cards per row */}
-              <Cards data={listing} key={listing._id} />
-            </div>
-          );
+          return <Cards data={listing} key={listing._id} />;
         })}
       </div>
     </>
