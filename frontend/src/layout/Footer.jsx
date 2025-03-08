@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <>
       <Divider></Divider>
-      <div className="absolute inset-x-0 bottom-0 h-16 flex justify-between  p-2 bg-zinc-100">
+      <div className="relative  inset-x-0 bottom-0 h-16 flex justify-between  p-2 bg-zinc-100">
         <div>
           <CopyrightIcon></CopyrightIcon> 2025 Luxora , Inc.
         </div>
