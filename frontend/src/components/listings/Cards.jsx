@@ -17,11 +17,14 @@ export default function Cards({ data }) {
         image={`${listing.image}`}
       />
       <CardContent className="flex flex-col flex-grow">
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h7" component="div">
           {listing.title}
         </Typography>
         <Typography variant="body2" sx={{ color: "text.secondary" }}>
-          {listing.description}
+          &#8377; {listing.price}
+        </Typography>
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          {listing.location}
         </Typography>
 
         <Link to={{ pathname: `/${listing._id}` }}>

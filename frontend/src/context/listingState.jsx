@@ -1,5 +1,8 @@
 import ListingContext from "./listingContext";
 const ListingState = ({ children }) => {
+  //listing methods
+
+  //get all listings
   const getListings = async () => {
     const response = await fetch("http://localhost:3000/listing/all", {
       method: "GET",
@@ -8,6 +11,7 @@ const ListingState = ({ children }) => {
     return data;
   };
 
+  //get a listing
   const getSingleListing = async (id) => {
     const response = await fetch(`http://localhost:3000/listing/${id}`, {
       method: "GET",
@@ -16,8 +20,30 @@ const ListingState = ({ children }) => {
     return data;
   };
 
+  const updateListing = async (id, card) => {
+    const response = await fetch(`http://localhost:3000/listing/${id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjdiOTQ4NThhMjI0YmE0OTMyN2U4YzMwIn0sImlhdCI6MTc0MTYxMzg2MX0.y17QyEDXgXXGIt5IqUgKfVTNfFA8NvV_BUu0f71sOOk",
+      },
+      body: JSON.stringify({
+        title: card.title,
+        description: card.description,
+        price: card.price,
+        country: card.country,
+        location: card.location, // (Fixed Typo)
+      }),
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
   return (
-    <ListingContext.Provider value={{ getListings, getSingleListing }}>
+    <ListingContext.Provider
+      value={{ getListings, getSingleListing, updateListing }}
+    >
       {children}
     </ListingContext.Provider>
   );

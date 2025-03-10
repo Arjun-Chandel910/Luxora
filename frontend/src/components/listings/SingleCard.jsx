@@ -1,9 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ListingContext from "../../context/listingContext";
 import { AddReview } from "../Reviews/AddReview";
+import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 
 const SingleCard = () => {
+  const navigagte = useNavigate();
   let { id } = useParams();
   const { getSingleListing } = useContext(ListingContext);
   const [card, setCard] = useState({
@@ -32,6 +37,7 @@ const SingleCard = () => {
     fetchData();
     console.log("data");
   }, []);
+
   return (
     <>
       <div className="flex flex-col items-center justify-center text-center w-full h-auto max-w-[800px] mx-auto gap-4 mb-4">
@@ -47,6 +53,28 @@ const SingleCard = () => {
         <h1 className="text-lg">&#8377; {card.price}</h1>
         <h1 className="text-lg">{card.location}</h1>
         <h1 className="text-lg">{card.country}</h1>
+
+        {/* button div */}
+        <div className="flex gap-4">
+          {/* edit button */}
+
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => {
+              return navigagte(`/${id}/edit`);
+            }}
+          >
+            Edit
+          </Button>
+
+          {/* delete button  */}
+          <Tooltip title="Delete">
+            <IconButton>
+              <DeleteIcon className="text-rose-700" />
+            </IconButton>
+          </Tooltip>
+        </div>
       </div>
       <AddReview></AddReview>
     </>
