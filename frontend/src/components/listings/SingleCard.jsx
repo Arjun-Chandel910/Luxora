@@ -3,14 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import ListingContext from "../../context/listingContext";
 import { AddReview } from "../Reviews/AddReview";
 import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
 
+import DeleteModal from "../../util/DeleteModal";
 const SingleCard = () => {
-  const navigagte = useNavigate();
+  const navigate = useNavigate();
   let { id } = useParams();
-  const { getSingleListing } = useContext(ListingContext);
+
+  const { getSingleListing, deleteListing } = useContext(ListingContext);
   const [card, setCard] = useState({
     title: "",
     description: "",
@@ -36,7 +35,12 @@ const SingleCard = () => {
     };
     fetchData();
     console.log("data");
-  }, []);
+  }, [id, getSingleListing]);
+
+  const handleDelete = async () => {
+    deleteListing(id);
+    navigate("/");
+  };
 
   return (
     <>
@@ -62,18 +66,15 @@ const SingleCard = () => {
             variant="contained"
             size="small"
             onClick={() => {
-              return navigagte(`/${id}/edit`);
+              return navigate(`/${id}/edit`);
             }}
           >
             Edit
           </Button>
 
           {/* delete button  */}
-          <Tooltip title="Delete">
-            <IconButton>
-              <DeleteIcon className="text-rose-700" />
-            </IconButton>
-          </Tooltip>
+
+          <DeleteModal id={id} handleDelete={handleDelete}></DeleteModal>
         </div>
       </div>
       <AddReview></AddReview>
