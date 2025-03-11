@@ -4,11 +4,9 @@ import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import ListingContext from "../../context/listingContext";
-const EditForm = () => {
+const AddListing = () => {
+  const { addListing } = useContext(ListingContext);
   const navigate = useNavigate();
-  const { getSingleListing, updateListing } = useContext(ListingContext);
-  const { id } = useParams();
-
   const [card, setCard] = useState({
     title: "",
     description: "",
@@ -17,24 +15,6 @@ const EditForm = () => {
     country: "",
     // image: "",
   });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const singleCard = await getSingleListing(id);
-      if (singleCard) {
-        setCard({
-          title: singleCard.title,
-          description: singleCard.description,
-          price: singleCard.price,
-          location: singleCard.location,
-          country: singleCard.country,
-          // image: singleCard.image,
-        });
-      }
-    };
-    fetchData();
-  }, []);
-
   const handleInput = (e) => {
     setCard((d) => {
       return { ...d, [e.target.name]: e.target.value };
@@ -42,14 +22,13 @@ const EditForm = () => {
   };
   const handleForm = (e) => {
     e.preventDefault();
-    updateListing(id, card);
-    navigate(`/${id}`);
+    addListing(card);
+    navigate(`/`);
   };
-
   return (
     <>
-      <div className="flex flex-col  w-1/3 sm:w-1/2 mx-auto ">
-        <h1 className="text-3xl  my-4">Edit Listing</h1>
+      <div className="flex flex-col  w-1/3 sm:w-1/2 mx-auto">
+        <h1 className="text-3xl  my-4">Add a Listing</h1>
         <form
           action=""
           className="flex gap-4  flex-col mt-4 "
@@ -84,23 +63,23 @@ const EditForm = () => {
             }}
           />
           {/* 
-          <input
-            required
-            id="outlined-multiline-flexible"
-            label="Image"
-            type="file"
-            accept="image/*"
-            value={card.image}
-            slotprops={{
-              inputLabel: {
-                shrink: true,
-              },
-            }}
-            className="w-40 h-12 px-4 border
-             border-gray-300 rounded-full 
-             focus:outline-none focus:ring-2
-              focus:ring-blue-500"
-          /> */}
+                <input
+                  required
+                  id="outlined-multiline-flexible"
+                  label="Image"
+                  type="file"
+                  accept="image/*"
+                  value={card.image}
+                  slotprops={{
+                    inputLabel: {
+                      shrink: true,
+                    },
+                  }}
+                  className="w-40 h-12 px-4 border
+                   border-gray-300 rounded-full 
+                   focus:outline-none focus:ring-2
+                    focus:ring-blue-500"
+                /> */}
           <TextField
             name="price"
             onChange={handleInput}
@@ -157,4 +136,4 @@ const EditForm = () => {
   );
 };
 
-export default EditForm;
+export default AddListing;

@@ -9,7 +9,10 @@ import { Link } from "react-router-dom";
 export default function Cards({ data }) {
   const listing = data;
   return (
-    <Card sx={{ maxWidth: 300, maxHeight: 300 }} className="my-4">
+    <Card
+      sx={{ maxWidth: 300, maxHeight: 300 }}
+      className="mx-8 my-4 rounded-4xl"
+    >
       <CardMedia
         component="img"
         alt="green iguana"

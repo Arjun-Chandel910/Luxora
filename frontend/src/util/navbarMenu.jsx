@@ -25,7 +25,7 @@ export default function BasicMenu() {
         onClick={handleClick}
       >
         {/* profile and hamburger icon */}
-        <div className="flex p-2  my-3 mx-4 text-2xl  border rounded-2xl ">
+        <div className="flex p-2  my-3 mx-4 text-2xl  border-2 rounded-2xl ">
           <MenuOutlinedIcon></MenuOutlinedIcon>
           <AccountCircleOutlinedIcon className=""></AccountCircleOutlinedIcon>
         </div>

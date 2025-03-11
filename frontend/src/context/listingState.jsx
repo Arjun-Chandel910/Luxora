@@ -1,7 +1,6 @@
 import ListingContext from "./listingContext";
 const ListingState = ({ children }) => {
   //listing methods
-
   //get all listings
   const getListings = async () => {
     const response = await fetch("http://localhost:3000/listing/all", {
@@ -33,14 +32,12 @@ const ListingState = ({ children }) => {
         description: card.description,
         price: card.price,
         country: card.country,
-        location: card.location, // (Fixed Typo)
+        location: card.location,
       }),
     });
-    const data = await response.json();
-    console.log(data);
   };
   const deleteListing = async (id) => {
-    const respponse = fetch(`http://localhost:3000/listing/${id}`, {
+    const response = fetch(`http://localhost:3000/listing/${id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
@@ -48,13 +45,34 @@ const ListingState = ({ children }) => {
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjdiOTQ4NThhMjI0YmE0OTMyN2U4YzMwIn0sImlhdCI6MTc0MTYxMzg2MX0.y17QyEDXgXXGIt5IqUgKfVTNfFA8NvV_BUu0f71sOOk",
       },
     });
-    const data = await response.json();
-    console.log(data);
+  };
+  const addListing = async (card) => {
+    const response = await fetch("http://localhost:3000/listing/add", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjdiOTQ4NThhMjI0YmE0OTMyN2U4YzMwIn0sImlhdCI6MTc0MTYxMzg2MX0.y17QyEDXgXXGIt5IqUgKfVTNfFA8NvV_BUu0f71sOOk",
+      },
+      body: JSON.stringify({
+        title: card.title,
+        description: card.description,
+        price: card.price,
+        country: card.country,
+        location: card.location,
+      }),
+    });
   };
 
   return (
     <ListingContext.Provider
-      value={{ getListings, getSingleListing, updateListing, deleteListing }}
+      value={{
+        getListings,
+        getSingleListing,
+        updateListing,
+        deleteListing,
+        addListing,
+      }}
     >
       {children}
     </ListingContext.Provider>

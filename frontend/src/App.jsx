@@ -7,6 +7,7 @@ import Divider from "@mui/material/Divider";
 import Listings from "./components/listings/listings";
 import SingleCard from "./components/listings/SingleCard";
 import EditForm from "./components/listings/EditForm";
+import AddListing from "./components/listings/AddListing";
 function App() {
   return (
     <>
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/" element={<Listings />} />
                 <Route path="/:id" element={<SingleCard />} />
                 <Route path="/:id/edit" element={<EditForm />} />
+                <Route path="/add" element={<AddListing />} />
               </Routes>
             </div>
             <Footer></Footer>
