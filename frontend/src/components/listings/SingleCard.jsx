@@ -5,6 +5,7 @@ import { AddReview } from "../Reviews/AddReview";
 import Button from "@mui/material/Button";
 
 import DeleteModal from "../../util/DeleteModal";
+import Reviews from "../Reviews/Reviews";
 const SingleCard = () => {
   const navigate = useNavigate();
   let { id } = useParams();
@@ -34,7 +35,6 @@ const SingleCard = () => {
       }
     };
     fetchData();
-    console.log("data");
   }, [id, getSingleListing]);
 
   const handleDelete = async () => {
@@ -78,6 +78,7 @@ const SingleCard = () => {
         </div>
       </div>
       <AddReview></AddReview>
+      <Reviews id={id}></Reviews>
     </>
   );
 };

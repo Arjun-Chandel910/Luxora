@@ -134,6 +134,22 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
 
 //Routes for review
 
+// show all reviews
+router.get("/:id/allReviews", async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const listing = await Listing.findById(id);
+    if (!listing) {
+      return next(new AppError(404, "listing does not exist."));
+    }
+    const listFounded = await Listing.findById(id).populate("reviews");
+    const reviews = listFounded.reviews;
+    res.json(reviews);
+  } catch (err) {
+    return next(new AppError(500, "Internal Server Error"));
+  }
+});
+
 // create a review
 router.post("/:id/review", authMiddleware, async (req, res, next) => {
   try {

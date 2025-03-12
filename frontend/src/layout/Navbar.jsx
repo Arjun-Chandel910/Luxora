@@ -10,7 +10,7 @@ const Navbar = () => {
       <div className="flex my-3 mx-2">
         <StarHalfIcon className="text-[#FF5A5F]"></StarHalfIcon>
         <h1
-          className="text-[#FF5A5F] text-4xl font-bold font-[Inter] mr-8"
+          className="cursor-pointer text-[#FF5A5F] text-4xl font-bold font-[Inter] mr-8"
           onClick={() => {
             navigate("/");
           }}
@@ -18,7 +18,7 @@ const Navbar = () => {
           Luxora
         </h1>
         <h1
-          className=" text-lg font-[Inter] mt-3 "
+          className="cursor-pointer text-lg font-[Inter] mt-3 "
           onClick={() => {
             navigate("/add");
           }}
