@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ListingContext from "../../context/listingContext";
-import { AddReview } from "../Reviews/AddReview";
 import Button from "@mui/material/Button";
 
 import DeleteModal from "../../util/DeleteModal";
@@ -77,7 +76,7 @@ const SingleCard = () => {
           <DeleteModal id={id} handleDelete={handleDelete}></DeleteModal>
         </div>
       </div>
-      <AddReview></AddReview>
+      <h2>reviews</h2>
       <Reviews id={id}></Reviews>
     </>
   );

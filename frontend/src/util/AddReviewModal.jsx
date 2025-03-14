@@ -1,7 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Rating from "@mui/material/Rating";
 import TextField from "@mui/material/TextField";
@@ -21,7 +20,7 @@ const style = {
   p: 4,
 };
 
-export default function AddReviewModal({ id }) {
+export default function AddReviewModal({ id, fetchReview }) {
   const navigate = useNavigate();
   const { postReview } = React.useContext(ListingContext);
 
@@ -38,15 +37,21 @@ export default function AddReviewModal({ id }) {
     });
   };
 
-  const handleForm = (e) => {
+  const handleForm = async (e) => {
     e.preventDefault();
-    postReview(id, review);
-    navigate(`/${id}`);
+    await postReview(id, review);
+    fetchReview();
     setOpen(false);
+
+    navigate(`/${id}`);
   };
+
   return (
     <div>
-      <Button onClick={handleOpen}>Add Review</Button>
+      <Button variant="contained" color="success" onClick={handleOpen}>
+        Add Review
+      </Button>
+
       <Modal
         open={open}
         onClose={handleClose}

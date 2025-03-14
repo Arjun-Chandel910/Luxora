@@ -92,6 +92,7 @@ const ListingState = ({ children }) => {
         rating: review.rating,
       }),
     });
+
     const data = await response.json();
     console.log(data);
   };
