@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const Listing = require("../models/listing.model");
 const Review = require("../models/review.model");
@@ -7,6 +8,10 @@ const { default: mongoose } = require("mongoose");
 const authMiddleware = require("../middlewares/jwt");
 const User = require("../models/user.model");
 
+const { storage } = require("../../cloudConfig");
+//(for image upload)
+const multer = require("multer"); //to parse the multiform data
+const upload = multer({ storage });
 //ROUTES FOR LISTINGS
 
 // Get all listings
@@ -50,31 +55,40 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // Add a listing
-router.post("/add", authMiddleware, async (req, res, next) => {
-  try {
-    const UserId = req.user.id || req.user._id;
-    const userF = await User.findById(UserId);
-    if (!userF) {
-      return next(new AppError(403, "InvalidUser"));
-    }
-    const { title, description, image, price, location, country } = req.body;
-    let listing = new Listing({
-      title,
-      description,
-      price,
-      image,
-      location,
-      country,
-      user: UserId,
-    });
+router.post(
+  "/add",
+  authMiddleware,
+  upload.single("image"),
+  async (req, res, next) => {
+    try {
+      const UserId = req.user.id || req.user._id;
+      const userF = await User.findById(UserId);
+      if (!userF) {
+        return next(new AppError(403, "InvalidUser"));
+      }
 
-    await listing.save();
-    res.status(201).json(listing);
-  } catch (err) {
-    console.error("Error:", err);
-    return next(new AppError(500, err.message || "Internal Server Error"));
+      const url = req.file.path;
+      const filename = req.file.filename;
+      const { title, description, price, location, country } = req.body;
+      let listing = new Listing({
+        title,
+        description,
+        price,
+        location,
+        country,
+        user: UserId,
+        image: { url, filename },
+      });
+
+      await listing.save();
+      // res.json(listing);
+      res.status(201).json(listing);
+    } catch (err) {
+      console.error("Error:", err);
+      return next(new AppError(500, err.message || "Internal Server Error"));
+    }
   }
-});
+);
 
 // Update a listing
 router.put("/:id", authMiddleware, async (req, res, next) => {

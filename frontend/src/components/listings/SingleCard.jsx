@@ -47,7 +47,7 @@ const SingleCard = () => {
         <h1 className="text-2xl">{card.title}</h1>
 
         <img
-          src={card.image}
+          src={card.image.url}
           alt={card.title}
           className="w-[200px] h-40 sm:w-[300px] sm:h-64 object-cover rounded-2xl"
         />

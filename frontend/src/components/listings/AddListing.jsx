@@ -13,16 +13,25 @@ const AddListing = () => {
     price: "",
     location: "",
     country: "",
-    // image: "",
+    image: "",
   });
   const handleInput = (e) => {
     setCard((d) => {
       return { ...d, [e.target.name]: e.target.value };
     });
   };
-  const handleForm = (e) => {
+  const handleForm = async (e) => {
     e.preventDefault();
-    addListing(card);
+    const formData = new FormData();
+    formData.append("title", card.title);
+    formData.append("description", card.description);
+    formData.append("price", card.price);
+    formData.append("country", card.country);
+    formData.append("location", card.location);
+    formData.append("image", card.image);
+    console.log(formData); // Attach the image file
+
+    await addListing(formData);
     navigate(`/`);
   };
   return (
@@ -33,6 +42,7 @@ const AddListing = () => {
           action=""
           className="flex gap-4  flex-col mt-4 "
           onSubmit={handleForm}
+          encType="multipart/form-data"
         >
           <TextField
             name="title"
@@ -47,6 +57,11 @@ const AddListing = () => {
               },
             }}
             value={card.title}
+          />
+          <input
+            type="file"
+            name="image"
+            onChange={(e) => setCard({ ...card, image: e.target.files[0] })}
           />
           <TextField
             name="description"

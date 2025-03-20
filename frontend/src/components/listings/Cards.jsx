@@ -18,7 +18,7 @@ export default function Cards({ data }) {
           component="img"
           alt="green iguana"
           className="h-1/2"
-          image={`${listing.image}`}
+          image={`${listing.image.url}`}
         />
         <CardContent className="flex flex-col flex-grow">
           <Typography gutterBottom variant="h7" component="div">

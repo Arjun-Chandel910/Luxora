@@ -11,11 +11,9 @@ const Reviews = ({ id }) => {
   const fetchReview = async () => {
     const rev = await getReviews(id);
     setReviews(rev);
-    console.log("hi");
   };
   useEffect(() => {
     fetchReview();
-    // console.log("hi");
   }, [id]);
   return (
     <div className="flex flex-wrap justify-start items-start w-3/4 mx-auto gap-4 ">
