@@ -9,6 +9,7 @@ const UserRouter = require("./src/routes/auth.router");
 //middlewares
 app.use(express.json());
 app.use(cors());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 //connect db
 mongoose
   .connect("mongodb://127.0.0.1:27017/Luxora")

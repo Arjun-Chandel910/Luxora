@@ -95,10 +95,15 @@ router.put("/:id", authMiddleware, async (req, res, next) => {
   try {
     const UserId = req.user.id || req.user._id;
     const userF = await User.findById(UserId);
+
     if (!userF) {
       return next(new AppError(403, "InvalidUser"));
     }
     let { id } = req.params;
+    // const l = await Listing.findById(id);
+    // if (userF !=l.user
+
+    // )
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return next(new AppError(404, "Invalid ID "));
     }

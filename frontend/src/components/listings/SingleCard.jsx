@@ -5,11 +5,14 @@ import Button from "@mui/material/Button";
 
 import DeleteModal from "../../util/DeleteModal";
 import Reviews from "../Reviews/Reviews";
+
+import { jwtDecode } from "jwt-decode"; //to decode the auth-token
 const SingleCard = () => {
   const navigate = useNavigate();
   let { id } = useParams();
 
-  const { getSingleListing, deleteListing } = useContext(ListingContext);
+  const { getSingleListing, deleteListing, authenticateUser } =
+    useContext(ListingContext);
   const [card, setCard] = useState({
     title: "",
     description: "",
@@ -18,6 +21,19 @@ const SingleCard = () => {
     country: "",
     image: "",
   });
+  const [isOwner, setIsOwner] = useState(false);
+
+  const checkOwner = async (listing) => {
+    const token = authenticateUser();
+    if (!token) {
+      console.log("user not authenticated");
+      return;
+    }
+    const decoded = jwtDecode(token);
+    console.log(listing.user);
+    console.log(decoded.user.id);
+    return listing.user === decoded.user.id;
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,6 +47,8 @@ const SingleCard = () => {
           country: singleCard.country,
           image: singleCard.image,
         });
+        const check = await checkOwner(singleCard);
+        setIsOwner(check);
       }
     };
     fetchData();
@@ -40,6 +58,7 @@ const SingleCard = () => {
     deleteListing(id);
     navigate("/");
   };
+  console.log("isOwner : " + isOwner);
 
   return (
     <>
@@ -58,23 +77,25 @@ const SingleCard = () => {
         <h1 className="text-lg">{card.country}</h1>
 
         {/* button div */}
-        <div className="flex gap-4">
-          {/* edit button */}
+        {isOwner && (
+          <div className="flex gap-4">
+            {/* edit button */}
 
-          <Button
-            variant="contained"
-            size="small"
-            onClick={() => {
-              return navigate(`/${id}/edit`);
-            }}
-          >
-            Edit
-          </Button>
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() => {
+                return navigate(`/${id}/edit`);
+              }}
+            >
+              Edit
+            </Button>
 
-          {/* delete button  */}
+            {/* delete button  */}
 
-          <DeleteModal id={id} handleDelete={handleDelete}></DeleteModal>
-        </div>
+            <DeleteModal id={id} handleDelete={handleDelete}></DeleteModal>
+          </div>
+        )}
       </div>
       <h2>reviews</h2>
       <Reviews id={id}></Reviews>

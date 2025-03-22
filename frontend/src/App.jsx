@@ -8,6 +8,8 @@ import Listings from "./components/listings/listings";
 import SingleCard from "./components/listings/SingleCard";
 import EditForm from "./components/listings/EditForm";
 import AddListing from "./components/listings/AddListing";
+import Signup from "./components/auth/Signup";
+import Login from "./components/auth/Login";
 function App() {
   return (
     <>
@@ -21,6 +23,8 @@ function App() {
                 <Route path="/" element={<Listings />} />
                 <Route path="/:id" element={<SingleCard />} />
                 <Route path="/:id/edit" element={<EditForm />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/add" element={<AddListing />} />
               </Routes>
             </div>

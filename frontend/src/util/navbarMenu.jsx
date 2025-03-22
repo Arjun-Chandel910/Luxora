@@ -4,6 +4,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import { Link } from "react-router-dom";
 
 export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -13,6 +14,13 @@ export default function BasicMenu() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    const token = localStorage.getItem("auth-token");
+    console.log(token);
+    localStorage.removeItem("auth-token");
+    handleClose();
   };
 
   return (
@@ -42,7 +50,12 @@ export default function BasicMenu() {
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to="/signup">Signup</Link>
+        </MenuItem>
+        <MenuItem onClick={handleLogout}>
+          <Link to="/">Logout</Link>
+        </MenuItem>
       </Menu>
     </div>
   );

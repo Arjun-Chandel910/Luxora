@@ -1,7 +1,13 @@
 import ListingContext from "./listingContext";
+
 const ListingState = ({ children }) => {
   //listing methods
   //get all listings
+
+  const authenticateUser = () => {
+    const token = localStorage.getItem("auth-token");
+    return token;
+  };
   const getListings = async () => {
     const response = await fetch("http://localhost:3000/listing/all", {
       method: "GET",
@@ -20,12 +26,17 @@ const ListingState = ({ children }) => {
   };
   //update
   const updateListing = async (id, card) => {
+    const token = localStorage.getItem("auth-token");
+    console.log(token);
+    if (!token) {
+      console.log("Unauthorized: No token");
+      return;
+    }
     const response = await fetch(`http://localhost:3000/listing/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjdiOTQ4NThhMjI0YmE0OTMyN2U4YzMwIn0sImlhdCI6MTc0MTYxMzg2MX0.y17QyEDXgXXGIt5IqUgKfVTNfFA8NvV_BUu0f71sOOk",
+        "auth-token": `${token}`,
       },
       body: JSON.stringify({
         title: card.title,
@@ -38,23 +49,29 @@ const ListingState = ({ children }) => {
   };
   //delete
   const deleteListing = async (id) => {
+    const token = localStorage.getItem("auth-token");
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized: No token" });
+    }
     const response = fetch(`http://localhost:3000/listing/${id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjdiOTQ4NThhMjI0YmE0OTMyN2U4YzMwIn0sImlhdCI6MTc0MTYxMzg2MX0.y17QyEDXgXXGIt5IqUgKfVTNfFA8NvV_BUu0f71sOOk",
+        "auth-token": `${token}`,
       },
     });
   };
 
   //add
   const addListing = async (formData) => {
+    const token = localStorage.getItem("auth-token");
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized: No token" });
+    }
     const response = await fetch("http://localhost:3000/listing/add", {
       method: "POST",
       headers: {
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjdiOTQ4NThhMjI0YmE0OTMyN2U4YzMwIn0sImlhdCI6MTc0MTYxMzg2MX0.y17QyEDXgXXGIt5IqUgKfVTNfFA8NvV_BUu0f71sOOk",
+        "auth-token": `${token}`,
       },
       body: formData,
     });
@@ -73,12 +90,15 @@ const ListingState = ({ children }) => {
 
   //post a review
   const postReview = async (id, review) => {
+    const token = localStorage.getItem("auth-token");
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized: No token" });
+    }
     const response = await fetch(`http://localhost:3000/listing/${id}/review`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjdiOTQ4NThhMjI0YmE0OTMyN2U4YzMwIn0sImlhdCI6MTc0MTYxMzg2MX0.y17QyEDXgXXGIt5IqUgKfVTNfFA8NvV_BUu0f71sOOk",
+        "auth-token": `${token}`,
       },
       body: JSON.stringify({
         comment: review.comment,
@@ -102,6 +122,7 @@ const ListingState = ({ children }) => {
         //reviews
         getReviews,
         postReview,
+        authenticateUser,
       }}
     >
       {children}
