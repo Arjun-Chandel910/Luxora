@@ -30,7 +30,14 @@ router.post("/signup", async (req, res, next) => {
   });
 
   await user.save();
-  res.send(user);
+  const JWT_DATA = {
+    user: {
+      id: user._id,
+    },
+  };
+  const token = jwt.sign(JWT_DATA, "superPassword"); //change the secret later
+
+  res.json({ token: token });
 });
 
 // login
@@ -50,6 +57,7 @@ router.post("/login", async (req, res, next) => {
     },
   };
   const token = jwt.sign(JWT_DATA, "superPassword"); //change the secret later
+
   res.json({ token: token });
 });
 // delete user

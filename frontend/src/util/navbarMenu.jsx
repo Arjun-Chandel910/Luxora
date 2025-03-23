@@ -4,9 +4,12 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import ListingContext from "../context/listingContext";
 
 export default function BasicMenu() {
+  const navigate = useNavigate();
+  const { authenticateUser } = React.useContext(ListingContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -17,10 +20,10 @@ export default function BasicMenu() {
   };
 
   const handleLogout = () => {
-    const token = localStorage.getItem("auth-token");
-    console.log(token);
     localStorage.removeItem("auth-token");
     handleClose();
+    authenticateUser();
+    navigate("/");
   };
 
   return (
@@ -53,9 +56,7 @@ export default function BasicMenu() {
         <MenuItem onClick={handleClose}>
           <Link to="/signup">Signup</Link>
         </MenuItem>
-        <MenuItem onClick={handleLogout}>
-          <Link to="/">Logout</Link>
-        </MenuItem>
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
   );

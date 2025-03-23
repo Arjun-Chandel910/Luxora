@@ -10,6 +10,7 @@ import EditForm from "./components/listings/EditForm";
 import AddListing from "./components/listings/AddListing";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
+import ProtectedRoute from "./components/listings/ProtectedRoute";
 function App() {
   return (
     <>
@@ -18,14 +19,17 @@ function App() {
           <BrowserRouter>
             <Navbar></Navbar>
             <Divider></Divider>
-            <div className="flex-grow">
+            <div className="flex-grow mt-1">
               <Routes>
                 <Route path="/" element={<Listings />} />
+
                 <Route path="/:id" element={<SingleCard />} />
                 <Route path="/:id/edit" element={<EditForm />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/add" element={<AddListing />} />
+                <Route element={<ProtectedRoute />}>
+                  <Route path="/add" element={<AddListing />} />
+                </Route>
               </Routes>
             </div>
             <Footer></Footer>

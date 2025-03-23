@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import BasicMenu from "../util/navbarMenu";
 import { useNavigate } from "react-router-dom";
+import ListingContext from "../context/listingContext";
 const Navbar = () => {
   const navigate = useNavigate();
 
@@ -17,6 +18,7 @@ const Navbar = () => {
         >
           Luxora
         </h1>
+
         <h1
           className="cursor-pointer text-lg font-[Inter] mt-3 "
           onClick={() => {

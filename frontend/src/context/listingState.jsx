@@ -8,6 +8,7 @@ const ListingState = ({ children }) => {
     const token = localStorage.getItem("auth-token");
     return token;
   };
+
   const getListings = async () => {
     const response = await fetch("http://localhost:3000/listing/all", {
       method: "GET",
