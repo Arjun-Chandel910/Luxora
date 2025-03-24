@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import ListingContext from "../context/listingContext";
 const Navbar = () => {
   const navigate = useNavigate();
-
   return (
     <div className="flex justify-between">
       <div className="flex my-3 mx-2">

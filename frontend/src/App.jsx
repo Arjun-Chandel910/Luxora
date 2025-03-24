@@ -24,11 +24,11 @@ function App() {
                 <Route path="/" element={<Listings />} />
 
                 <Route path="/:id" element={<SingleCard />} />
-                <Route path="/:id/edit" element={<EditForm />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
                 <Route element={<ProtectedRoute />}>
                   <Route path="/add" element={<AddListing />} />
+                  <Route path="/:id/edit" element={<EditForm />} />
                 </Route>
               </Routes>
             </div>

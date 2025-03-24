@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ListingContext from "../../context/listingContext";
 import Button from "@mui/material/Button";
+import LuxoraMap from "../maps/LuxoraMap";
 
 import DeleteModal from "../../util/DeleteModal";
 import Reviews from "../Reviews/Reviews";
@@ -26,12 +27,9 @@ const SingleCard = () => {
   const checkOwner = async (listing) => {
     const token = authenticateUser();
     if (!token) {
-      console.log("user not authenticated");
       return;
     }
     const decoded = jwtDecode(token);
-    console.log(listing.user);
-    console.log(decoded.user.id);
     return listing.user === decoded.user.id;
   };
 
@@ -58,7 +56,6 @@ const SingleCard = () => {
     deleteListing(id);
     navigate("/");
   };
-  console.log("isOwner : " + isOwner);
 
   return (
     <>
@@ -99,6 +96,7 @@ const SingleCard = () => {
       </div>
       <h2>reviews</h2>
       <Reviews id={id}></Reviews>
+      <LuxoraMap card={card}></LuxoraMap>
     </>
   );
 };
