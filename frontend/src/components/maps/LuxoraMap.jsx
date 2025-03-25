@@ -4,59 +4,40 @@ import { useEffect, useState, useRef } from "react";
 
 const LuxoraMap = ({ card }) => {
   const location = card.location;
-  const [coordinates, setCoordinates] = useState(null); // Start as null
-  const mapRef = useRef(null); // Reference for the map
+  const [coordinates, setCoordinates] = useState(null);
+  const mapRef = useRef(null); //Reference for the map
 
   useEffect(() => {
     const fetchCoordinates = async () => {
-      if (!location || location.trim() === "") {
-        console.error("Invalid location:", location);
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+          location
+        )}`,
+        {
+          method: "GET",
+          headers: {
+            "User-Agent": "Luxora/1.0 (your-email@example.com)", //prevent rate-limiting
+          },
+        }
+      );
+      const data = await response.json();
+      console.log("API Response:", data);
+      if (!data.length) {
+        console.error("No coordinates found for:", location);
         return;
       }
-
-      try {
-        await new Promise((resolve) => setTimeout(resolve, 500)); // Delay to avoid spam
-
-        const response = await fetch(
-          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-            location
-          )}`,
-          {
-            method: "GET",
-            headers: {
-              "User-Agent": "Luxora/1.0 (your-email@example.com)", // Prevent rate-limiting
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`API Error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log("API Response:", data);
-
-        if (!data.length) {
-          console.error("No coordinates found for:", location);
-          return;
-        }
-
-        setCoordinates({
-          lat: parseFloat(data[0].lat),
-          lon: parseFloat(data[0].lon),
-        });
-      } catch (error) {
-        console.error("Error fetching coordinates:", error);
-      }
+      setCoordinates({
+        lat: parseFloat(data[0].lat),
+        lon: parseFloat(data[0].lon),
+      });
     };
-
     fetchCoordinates();
   }, [location]);
 
   useEffect(() => {
     console.log("Updated Coordinates:", coordinates);
     if (mapRef.current && coordinates) {
-      mapRef.current.setView([coordinates.lat, coordinates.lon], 10); // Update map center
+      mapRef.current.setView([coordinates.lat, coordinates.lon], 10); //update map center
     }
   }, [coordinates]);
 
@@ -83,7 +64,7 @@ const LuxoraMap = ({ card }) => {
             <Marker position={[coordinates.lat, coordinates.lon]}>
               <Popup>
                 <span className="font-semibold text-gray-800 dark:text-gray-300">
-                  A luxury stay awaits you. ✨
+                  A luxury stay awaits you.✨
                 </span>
               </Popup>
             </Marker>
