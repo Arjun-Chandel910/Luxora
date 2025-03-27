@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-
 import Cards from "./Cards";
 import ListingContext from "../../context/listingContext";
+import Filters from "./filters";
 const Listings = () => {
   const { getListings } = useContext(ListingContext);
 
@@ -17,6 +17,7 @@ const Listings = () => {
 
   return (
     <>
+      <Filters />
       <div className="flex justify-evenly gap-4 p-4 flex-row  flex-wrap my-8">
         {listings.map((listing) => {
           return <Cards data={listing} key={listing._id} />;

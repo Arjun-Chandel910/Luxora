@@ -4,7 +4,7 @@ import ListingState from "./context/listingState";
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
 import Divider from "@mui/material/Divider";
-import Listings from "./components/listings/listings";
+import Listings from "./components/listings/Listings";
 import SingleCard from "./components/listings/SingleCard";
 import EditForm from "./components/listings/EditForm";
 import AddListing from "./components/listings/AddListing";
@@ -19,7 +19,7 @@ function App() {
           <BrowserRouter>
             <Navbar></Navbar>
             <Divider></Divider>
-            <div className="flex-grow mt-1">
+            <div className="flex-grow mt-24">
               <Routes>
                 <Route path="/" element={<Listings />} />
 

@@ -57,9 +57,12 @@ const SingleCard = () => {
     navigate("/");
   };
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
   return (
     <>
-      <div className="flex flex-col items-center justify-center text-center w-full h-auto max-w-[800px] mx-auto gap-4 mb-4">
+      <div className="min-h-screen flex flex-col items-center justify-center text-center w-full h-auto max-w-[800px] mx-auto gap-4 mb-4">
         <h1 className="text-2xl">{card.title}</h1>
 
         <img

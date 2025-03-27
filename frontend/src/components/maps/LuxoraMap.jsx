@@ -42,36 +42,38 @@ const LuxoraMap = ({ card }) => {
   }, [coordinates]);
 
   return (
-    <div className="w-full max-w-4xl mx-auto mt-6">
-      <h1 className="text-center text-3xl font-semibold text-gray-900 dark:text-white mb-4">
+    <>
+      <h1 className="text-center text-3xl font-semibold text-red-500 bg-white p-4">
         Where You'll Be
       </h1>
-      <div className="overflow-hidden rounded-lg shadow-xl border border-gray-300 dark:border-gray-700">
-        <MapContainer
-          center={
-            coordinates ? [coordinates.lat, coordinates.lon] : [51.505, -0.09]
-          }
-          zoom={10}
-          scrollWheelZoom={false}
-          className="h-[400px] w-full"
-          ref={mapRef}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {coordinates && (
-            <Marker position={[coordinates.lat, coordinates.lon]}>
-              <Popup>
-                <span className="font-semibold text-gray-800 dark:text-gray-300">
-                  A luxury stay awaits you.✨
-                </span>
-              </Popup>
-            </Marker>
-          )}
-        </MapContainer>
+      <div className="w-full max-w-4xl mx-auto mt-6">
+        <div className="overflow-hidden rounded-lg shadow-xl border border-gray-300 dark:border-gray-700">
+          <MapContainer
+            center={
+              coordinates ? [coordinates.lat, coordinates.lon] : [51.505, -0.09]
+            }
+            zoom={10}
+            scrollWheelZoom={false}
+            className="h-[400px] w-full"
+            ref={mapRef}
+          >
+            <TileLayer
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            {coordinates && (
+              <Marker position={[coordinates.lat, coordinates.lon]}>
+                <Popup>
+                  <span className="font-semibold text-gray-800 dark:text-gray-300">
+                    A luxury stay awaits you.
+                  </span>
+                </Popup>
+              </Marker>
+            )}
+          </MapContainer>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
