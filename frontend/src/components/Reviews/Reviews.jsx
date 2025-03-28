@@ -18,6 +18,8 @@ const Reviews = ({ id }) => {
   return (
     <div className="flex flex-wrap justify-start items-start w-3/4 mx-auto gap-4 ">
       <ReviewModal id={id} fetchReview={fetchReview}></ReviewModal>
+      <br />
+      <br />
       {reviews.map((item) => {
         return (
           <div key={item.id || item._id}>

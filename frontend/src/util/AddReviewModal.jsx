@@ -22,7 +22,7 @@ const style = {
 
 export default function AddReviewModal({ id, fetchReview }) {
   const navigate = useNavigate();
-  const { postReview } = React.useContext(ListingContext);
+  const { postReview, authenticateUser } = React.useContext(ListingContext);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -45,10 +45,18 @@ export default function AddReviewModal({ id, fetchReview }) {
 
     navigate(`/${id}`);
   };
+  const token = authenticateUser();
 
+  const handleAddReview = () => {
+    if (token) {
+      handleOpen();
+    } else {
+      navigate("/login");
+    }
+  };
   return (
     <div>
-      <Button variant="contained" color="success" onClick={handleOpen}>
+      <Button variant="contained" color="success" onClick={handleAddReview}>
         Add Review
       </Button>
 
@@ -93,6 +101,7 @@ export default function AddReviewModal({ id, fetchReview }) {
           </form>
         </Box>
       </Modal>
+      <br />
     </div>
   );
 }

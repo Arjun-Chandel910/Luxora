@@ -5,7 +5,7 @@ import { useEffect, useState, useRef } from "react";
 const LuxoraMap = ({ card }) => {
   const location = card.location;
   const [coordinates, setCoordinates] = useState(null);
-  const mapRef = useRef(null); //Reference for the map
+  const mapRef = useRef(null);
 
   useEffect(() => {
     const fetchCoordinates = async () => {
@@ -16,12 +16,11 @@ const LuxoraMap = ({ card }) => {
         {
           method: "GET",
           headers: {
-            "User-Agent": "Luxora/1.0 (your-email@example.com)", //prevent rate-limiting
+            "User-Agent": "Luxora/1.0 (your-email@example.com)",
           },
         }
       );
       const data = await response.json();
-      console.log("API Response:", data);
       if (!data.length) {
         console.error("No coordinates found for:", location);
         return;
@@ -35,27 +34,27 @@ const LuxoraMap = ({ card }) => {
   }, [location]);
 
   useEffect(() => {
-    console.log("Updated Coordinates:", coordinates);
     if (mapRef.current && coordinates) {
-      mapRef.current.setView([coordinates.lat, coordinates.lon], 10); //update map center
+      mapRef.current.setView([coordinates.lat, coordinates.lon], 12);
     }
   }, [coordinates]);
 
   return (
     <>
-      <h1 className="text-center text-3xl font-semibold text-red-500 bg-white p-4">
+      <h1 className="text-center text-2xl font-bold text-gray-800 bg-white py-4">
         Where You'll Be
       </h1>
-      <div className="w-full max-w-4xl mx-auto mt-6">
-        <div className="overflow-hidden rounded-lg shadow-xl border border-gray-300 dark:border-gray-700">
+      <div className="w-full max-w-2xl mx-auto mt-4 relative z-0">
+        <div className="overflow-hidden rounded-lg shadow-md border border-gray-300 relative z-0">
           <MapContainer
             center={
               coordinates ? [coordinates.lat, coordinates.lon] : [51.505, -0.09]
             }
-            zoom={10}
+            zoom={12}
             scrollWheelZoom={false}
-            className="h-[400px] w-full"
+            className="h-[300px] w-full relative z-0"
             ref={mapRef}
+            style={{ position: "relative", zIndex: 0 }}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -64,7 +63,7 @@ const LuxoraMap = ({ card }) => {
             {coordinates && (
               <Marker position={[coordinates.lat, coordinates.lon]}>
                 <Popup>
-                  <span className="font-semibold text-gray-800 dark:text-gray-300">
+                  <span className="font-semibold text-gray-800">
                     A luxury stay awaits you.
                   </span>
                 </Popup>

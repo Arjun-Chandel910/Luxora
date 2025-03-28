@@ -3,11 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import ListingContext from "../../context/listingContext";
 import Button from "@mui/material/Button";
 import LuxoraMap from "../maps/LuxoraMap";
-
 import DeleteModal from "../../util/DeleteModal";
 import Reviews from "../Reviews/Reviews";
+import Divider from "@mui/material/Divider";
+import { jwtDecode } from "jwt-decode";
 
-import { jwtDecode } from "jwt-decode"; //to decode the auth-token
 const SingleCard = () => {
   const navigate = useNavigate();
   let { id } = useParams();
@@ -26,9 +26,7 @@ const SingleCard = () => {
 
   const checkOwner = async (listing) => {
     const token = authenticateUser();
-    if (!token) {
-      return;
-    }
+    if (!token) return;
     const decoded = jwtDecode(token);
     return listing.user === decoded.user.id;
   };
@@ -60,46 +58,46 @@ const SingleCard = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
+
   return (
     <>
-      <div className="min-h-screen flex flex-col items-center justify-center text-center w-full h-auto max-w-[800px] mx-auto gap-4 mb-4">
-        <h1 className="text-2xl">{card.title}</h1>
-
+      <div className="min-h-screen flex flex-col items-center justify-center text-center w-full max-w-2xl mx-auto gap-6 p-6 bg-white text-gray-900 shadow-md rounded-xl border border-gray-300 mt-8">
+        <h1 className="text-2xl font-bold text-red-500">{card.title}</h1>
         <img
           src={card.image.url}
           alt={card.title}
-          className="w-[200px] h-40 sm:w-[300px] sm:h-64 object-cover rounded-2xl"
+          className="w-[85%] sm:w-[450px] h-[250px] sm:h-[320px] object-cover rounded-xl shadow-md border border-gray-300"
         />
+        <h1 className="text-base text-gray-700 italic">{card.description}</h1>
+        <h1 className="text-xl font-semibold text-red-500">
+          &#8377; {card.price}
+        </h1>
+        <h1 className="text-base text-gray-600">
+          {card.location}, {card.country}
+        </h1>
 
-        <h1 className="text-xl ">{card.description}</h1>
-        <h1 className="text-lg">&#8377; {card.price}</h1>
-        <h1 className="text-lg">{card.location}</h1>
-        <h1 className="text-lg">{card.country}</h1>
-
-        {/* button div */}
         {isOwner && (
-          <div className="flex gap-4">
-            {/* edit button */}
-
+          <div className="flex gap-3 mt-3">
             <Button
               variant="contained"
               size="small"
-              onClick={() => {
-                return navigate(`/${id}/edit`);
-              }}
+              className="bg-red-500 text-white hover:bg-red-600"
+              onClick={() => navigate(`/${id}/edit`)}
             >
               Edit
             </Button>
-
-            {/* delete button  */}
-
             <DeleteModal id={id} handleDelete={handleDelete}></DeleteModal>
           </div>
         )}
       </div>
-      <h2>reviews</h2>
-      <Reviews id={id}></Reviews>
+
       <LuxoraMap card={card}></LuxoraMap>
+      <br />
+      <br />
+      <Divider className="border-gray-300" />
+      <br />
+      <br />
+      <Reviews id={id}></Reviews>
     </>
   );
 };

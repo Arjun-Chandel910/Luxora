@@ -8,7 +8,7 @@ const Navbar = () => {
   const [search, setSearch] = useState("");
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
+    <div className="fixed top-0 left-0 w-full bg-white shadow-md z-[50] ">
       <div className="flex justify-between items-center px-10 py-4 max-w-7xl mx-auto">
         {/* Left Section - Logo */}
         <div
@@ -21,7 +21,6 @@ const Navbar = () => {
           </h1>
         </div>
 
-        
         {/* Middle Section - Search Bar */}
         <div className="relative w-1/3">
           <input
