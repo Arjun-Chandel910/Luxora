@@ -8,43 +8,40 @@ const Navbar = () => {
   const [search, setSearch] = useState("");
 
   return (
-    <div className="fixed top-0 left-0 w-full bg-white shadow-md z-[50] ">
+    <div className="navbar fixed top-0 right-0 w-full bg-white shadow-md border-b border-gray-200 z-[50] transition-all duration-300">
       <div className="flex justify-between items-center px-10 py-4 max-w-7xl mx-auto">
-        {/* Left Section - Logo */}
         <div
-          className="flex items-center cursor-pointer transition-transform duration-200 hover:scale-105"
+          className="flex items-center cursor-pointer transition-transform duration-300 hover:scale-105"
           onClick={() => navigate("/")}
         >
-          <StarHalfIcon className="text-[#FF5A5F] text-3xl" />
-          <h1 className="text-gray-900 text-2xl font-semibold ml-2 tracking-wide">
+          <StarHalfIcon className="text-[#FF385C] text-4xl" />
+          <h1 className="text-gray-900 text-3xl font-semibold ml-2 tracking-wide">
             Luxora
           </h1>
         </div>
 
-        {/* Middle Section - Search Bar */}
-        <div className="relative w-1/3">
+        <div className="relative w-1/3 max-w-lg">
           <input
             type="text"
-            placeholder="Search listings..."
+            placeholder="Search luxury stays..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full px-5 py-2 rounded-full border border-gray-300 shadow-sm text-gray-700 placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#FF5A5F] focus:border-[#FF5A5F] transition"
+            className="w-full px-5 py-3 rounded-full border border-gray-300 bg-gray-100 text-gray-900 shadow-sm placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#FF385C] focus:border-[#FF385C] transition-all duration-300 hover:shadow-md"
           />
           <button
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-[#FF5A5F] transition"
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-[#FF385C] transition-all duration-300 hover:scale-110"
             onClick={() => alert(`Searching for: ${search}`)}
           >
             🔍
           </button>
         </div>
 
-        {/* Right Section - Menu */}
         <div className="flex items-center space-x-6">
           <h1
-            className="cursor-pointer text-gray-800 text-lg font-medium hover:text-[#FF5A5F] transition"
+            className="cursor-pointer text-white text-lg font-medium px-6 py-2 bg-[#FF385C] rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
             onClick={() => navigate("/add")}
           >
-            Add Listing
+            + Add Listing
           </h1>
           <BasicMenu />
         </div>

@@ -122,6 +122,11 @@ export default function Filters() {
             sx={{
               borderColor: filter[item.label] ? "#FF5A5F" : "white",
               color: filter[item.label] ? "white" : "black",
+              transition: "all 0.3s ease-in-out",
+              "&:hover": {
+                transform: "scale(1.05)",
+                boxShadow: "0px 6px 15px rgba(0, 0, 0, 0.15)",
+              },
             }}
           >
             <Box sx={{ whiteSpace: "nowrap", mx: 1 }}>
