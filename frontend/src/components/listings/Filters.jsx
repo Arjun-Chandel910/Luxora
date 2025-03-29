@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Box from "@mui/joy/Box";
 import Typography from "@mui/joy/Typography";
 import Card from "@mui/joy/Card";
@@ -38,6 +38,25 @@ export default function Filters() {
       behavior: "smooth",
     });
   };
+  const [filter, setFilter] = useState({
+    Trending: false,
+    Mountains: false,
+    "Swimming Pools": false,
+    Tropical: false,
+    Farms: false,
+    "Urban Living": false,
+    Beachside: false,
+    Cabins: false,
+    Castles: false,
+    Houseboats: false,
+    Forests: false,
+    "Hot Tubs": false,
+    Villas: false,
+    "Historic Homes": false,
+    Cliffside: false,
+    Chalets: false,
+    "Ski Resorts": false,
+  });
 
   const categories = [
     { icon: <TrendingIcon />, label: "Trending" },
@@ -58,6 +77,15 @@ export default function Filters() {
     { icon: <ChaletsIcon />, label: "Chalets" },
     { icon: <SkiResortsIcon />, label: "Ski Resorts" },
   ];
+
+  const handleFilter = (label) => {
+    const flag = filter[label];
+    console.log(flag);
+    setFilter((data) => {
+      return { ...data, [label]: !data[label] };
+    });
+    console.log(filter[label] + " : clicked");
+  };
 
   return (
     <div className="flex items-center justify-center mt-6 space-x-4">
@@ -84,10 +112,35 @@ export default function Filters() {
         }}
       >
         {categories.map((item, index) => (
-          <Card key={index} orientation="horizontal" size="sm">
+          <Card
+            key={index}
+            orientation="horizontal"
+            size="sm"
+            onClick={() => {
+              handleFilter(item.label);
+            }}
+            sx={{
+              borderColor: filter[item.label] ? "#FF5A5F" : "white",
+              color: filter[item.label] ? "white" : "black",
+            }}
+          >
             <Box sx={{ whiteSpace: "nowrap", mx: 1 }}>
-              <Typography level="title-md">{item.icon}</Typography>
-              <Typography level="body-sm">{item.label}</Typography>
+              <Typography
+                level="title-md"
+                sx={{
+                  color: filter[item.label] ? "#FF5A5F" : "black",
+                }}
+              >
+                {item.icon}
+              </Typography>
+              <Typography
+                level="body-sm"
+                sx={{
+                  color: filter[item.label] ? "#FF5A5F" : "black",
+                }}
+              >
+                {item.label}
+              </Typography>
             </Box>
           </Card>
         ))}

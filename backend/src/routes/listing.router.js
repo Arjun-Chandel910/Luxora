@@ -138,12 +138,10 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return next(new AppError(400, "Invalid ID"));
     }
-
     let listing = await Listing.findByIdAndDelete(id);
     if (!listing) {
       return next(new AppError(404, "Listing not found"));
     }
-
     res.json({ message: "Listing deleted successfully", listing });
   } catch (err) {
     console.error("Error:", err);
