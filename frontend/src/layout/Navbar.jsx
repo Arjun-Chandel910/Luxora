@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import BasicMenu from "../util/navbarMenu";
 import { useNavigate } from "react-router-dom";
+import ListingContext from "../context/listingContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { getListings } = useContext(ListingContext);
   const [search, setSearch] = useState("");
+
+  const handleSearchBtn = (e) => {
+    setSearch(e.target.value);
+    console.log(search);
+  };
+  const handleSearch = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div className="navbar fixed top-0 right-0 w-full bg-white shadow-md border-b border-gray-200 z-[50] transition-all duration-300">
@@ -21,19 +31,22 @@ const Navbar = () => {
         </div>
 
         <div className="relative w-1/3 max-w-lg">
-          <input
-            type="text"
-            placeholder="Search luxury stays..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full px-5 py-3 rounded-full border border-gray-300 bg-gray-100 text-gray-900 shadow-sm placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#FF385C] focus:border-[#FF385C] transition-all duration-300 hover:shadow-md"
-          />
-          <button
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-[#FF385C] transition-all duration-300 hover:scale-110"
-            onClick={() => alert(`Searching for: ${search}`)}
-          >
-            🔍
-          </button>
+          <form action="">
+            <input
+              type="text"
+              placeholder="Search luxury stays..."
+              value={search}
+              onChange={handleSearchBtn}
+              className="w-full px-5 py-3 rounded-full border border-gray-300 bg-gray-100 text-gray-900 shadow-sm placeholder-gray-500 outline-none focus:ring-2 focus:ring-[#FF385C] focus:border-[#FF385C] transition-all duration-300 hover:shadow-md"
+            />
+            <button
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-[#FF385C] transition-all duration-300 hover:scale-110"
+              // onClick={() =>}
+              type="submit"
+            >
+              🔍
+            </button>
+          </form>
         </div>
 
         <div className="flex items-center space-x-6">

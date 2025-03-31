@@ -25,6 +25,26 @@ router.get("/all", async (req, res, next) => {
   }
 });
 
+//search  a listing
+router.get("/s", async (req, res, next) => {
+  try {
+    const search = req.query.search?.trim();
+
+    if (!search) {
+      return next(new AppError(400, "Search query is required"));
+    }
+
+    const listings = await Listing.find({
+      location: { $regex: search, $options: "i" },
+    });
+
+    res.json(listings);
+  } catch (err) {
+    console.error("Error:", err);
+    return next(new AppError(500, err.message || "Internal Server Error"));
+  }
+});
+
 // Get a listing by ID
 router.get("/:id", async (req, res, next) => {
   try {

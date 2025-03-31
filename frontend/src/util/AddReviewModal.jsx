@@ -23,7 +23,6 @@ const style = {
 export default function AddReviewModal({ id, fetchReview }) {
   const navigate = useNavigate();
   const { postReview, authenticateUser } = React.useContext(ListingContext);
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

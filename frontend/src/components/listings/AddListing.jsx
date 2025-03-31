@@ -30,7 +30,6 @@ const AddListing = () => {
     formData.append("location", card.location);
     formData.append("image", card.image);
     console.log(formData); // Attach the image file
-
     await addListing(formData);
     navigate(`/`);
   };
