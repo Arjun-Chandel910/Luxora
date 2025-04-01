@@ -11,6 +11,7 @@ import AddListing from "./components/listings/AddListing";
 import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import ProtectedRoute from "./components/listings/ProtectedRoute";
+import SearchedCard from "./components/listings/searchedCard";
 function App() {
   return (
     <>
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/:id" element={<SingleCard />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/s" element={<SearchedCard />} />
                 <Route element={<ProtectedRoute />}>
                   <Route path="/add" element={<AddListing />} />
                   <Route path="/:id/edit" element={<EditForm />} />

@@ -2,8 +2,20 @@ import ListingContext from "./listingContext";
 
 const ListingState = ({ children }) => {
   //listing methods
-  //get all listings
 
+  //seach listings based on location
+  const searchListings = async (location) => {
+    const response = await fetch(
+      `http://localhost:3000/listing/s?search=${location}`,
+      {
+        method: "GET",
+      }
+    );
+    const data = await response.json();
+    return data;
+  };
+
+  //get all listings
   const authenticateUser = () => {
     const token = localStorage.getItem("auth-token");
     return token;
@@ -115,6 +127,7 @@ const ListingState = ({ children }) => {
     <ListingContext.Provider
       value={{
         //listings
+        searchListings,
         getListings,
         getSingleListing,
         updateListing,

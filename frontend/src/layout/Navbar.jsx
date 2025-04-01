@@ -2,21 +2,21 @@ import React, { useContext, useState } from "react";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import BasicMenu from "../util/navbarMenu";
 import { useNavigate } from "react-router-dom";
-import ListingContext from "../context/listingContext";
-
 const Navbar = () => {
   const navigate = useNavigate();
-  const { getListings } = useContext(ListingContext);
   const [search, setSearch] = useState("");
-
   const handleSearchBtn = (e) => {
     setSearch(e.target.value);
-    console.log(search);
-  };
-  const handleSearch = (e) => {
-    e.preventDefault();
   };
 
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    if (search == "") {
+      navigate("/");
+      return;
+    }
+    navigate(`/s?location=${search}`);
+  };
   return (
     <div className="navbar fixed top-0 right-0 w-full bg-white shadow-md border-b border-gray-200 z-[50] transition-all duration-300">
       <div className="flex justify-between items-center px-10 py-4 max-w-7xl mx-auto">
@@ -31,7 +31,7 @@ const Navbar = () => {
         </div>
 
         <div className="relative w-1/3 max-w-lg">
-          <form action="">
+          <form action="" onSubmit={handleSearch}>
             <input
               type="text"
               placeholder="Search luxury stays..."
