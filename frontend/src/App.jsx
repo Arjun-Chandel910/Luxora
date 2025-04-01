@@ -20,7 +20,7 @@ function App() {
           <BrowserRouter>
             <Navbar></Navbar>
             <Divider></Divider>
-            <div className="flex-grow mt-24">
+            <div className="flex-grow mt-18">
               <Routes>
                 <Route path="/" element={<Listings />} />
 

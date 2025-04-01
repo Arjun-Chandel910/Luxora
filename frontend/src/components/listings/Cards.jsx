@@ -12,7 +12,11 @@ export default function Cards({ data }) {
     <Link to={`/${listing._id}`} className="no-underline">
       <Card
         sx={{
-          maxWidth: 350,
+          width: 350,
+          height: 400,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
           borderRadius: "20px",
           boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
           transition: "transform 0.3s ease-in-out",
@@ -23,12 +27,11 @@ export default function Cards({ data }) {
         }}
         className="mx-6 my-4"
       >
-        {/* FIXED CONTAINER FOR IMAGE */}
         <div
           style={{
             width: "100%",
-            height: 200, // Ensures all images have the same height
-            overflow: "hidden", // Prevents stretching
+            height: 200,
+            overflow: "hidden",
             borderTopLeftRadius: "20px",
             borderTopRightRadius: "20px",
           }}
@@ -39,25 +42,35 @@ export default function Cards({ data }) {
             sx={{
               width: "100%",
               height: "100%",
-              objectFit: "cover", // Ensures proper cropping
-              objectPosition: "center",
+              objectFit: "cover",
             }}
             image={listing.image.url}
           />
         </div>
 
-        <CardContent className="p-4">
-          <Typography
-            gutterBottom
-            variant="h6"
-            component="div"
-            className="font-semibold"
-          >
-            {listing.title}
-          </Typography>
-          <Typography variant="body2" className="text-gray-600">
-            {listing.location}
-          </Typography>
+        <CardContent
+          sx={{
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+          }}
+          className="p-4"
+        >
+          <div>
+            <Typography
+              gutterBottom
+              variant="h6"
+              component="div"
+              className="font-semibold"
+            >
+              {listing.title}
+            </Typography>
+            <Typography variant="body2" className="text-gray-600">
+              {listing.location}
+            </Typography>
+          </div>
+
           <Typography
             variant="h6"
             className="mt-2 text-lg font-bold text-gray-900"

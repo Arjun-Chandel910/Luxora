@@ -61,12 +61,12 @@ const SingleCard = () => {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col items-center justify-center text-center w-full max-w-2xl mx-auto gap-6 p-6 bg-white text-gray-900 shadow-md rounded-xl border border-gray-300 mt-8">
+      <div className="min-h-screen flex flex-col items-center justify-center text-center w-full max-w-3xl mx-auto gap-6 p-6 bg-white text-gray-900 shadow-md rounded-xl mt-[-50px]">
         <h1 className="text-2xl font-bold text-red-500">{card.title}</h1>
         <img
           src={card.image.url}
           alt={card.title}
-          className="w-[85%] sm:w-[450px] h-[250px] sm:h-[320px] object-cover rounded-xl shadow-md border border-gray-300"
+          className="w-[95%] sm:w-[600px] h-[180px] sm:h-[200px] object-cover rounded-xl shadow-md"
         />
         <h1 className="text-base text-gray-700 italic">{card.description}</h1>
         <h1 className="text-xl font-semibold text-red-500">
@@ -91,6 +91,9 @@ const SingleCard = () => {
         )}
       </div>
 
+      <br />
+      <br />
+      <Divider className="border-gray-300" />
       <LuxoraMap card={card}></LuxoraMap>
       <br />
       <br />
