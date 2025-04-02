@@ -24,7 +24,7 @@ import {
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-export default function Filters() {
+export default function Filters({ arr, setArr }) {
   const scrollRef = useRef(null);
 
   const scroll = (direction) => {
@@ -79,17 +79,21 @@ export default function Filters() {
   ];
 
   const handleFilter = (label) => {
-    const flag = filter[label];
-    console.log(flag);
     setFilter((data) => {
       return { ...data, [label]: !data[label] };
     });
-    console.log(filter[label] + " : clicked");
+
+    setArr((prevData) => {
+      if (prevData.includes(label)) {
+        return prevData.filter((d) => d !== label);
+      }
+      return [...prevData, label];
+    });
   };
 
   return (
     <div className="flex items-center justify-center mt-6 space-x-4">
-      {/*left Arrow */}
+      {/*left arrow */}
       <button
         onClick={() => scroll("left")}
         className="p-2 rounded-full shadow-md hover:bg-[#FF5A5F] dark:hover:bg-[#FF5A5F] transition"
@@ -97,7 +101,6 @@ export default function Filters() {
         <KeyboardArrowLeftIcon fontSize="small" />
       </button>
 
-      {/*scrollable Box */}
       <Box
         ref={scrollRef}
         sx={{
@@ -151,7 +154,7 @@ export default function Filters() {
         ))}
       </Box>
 
-      {/*right Arrow */}
+      {/*right arrow */}
       <button
         onClick={() => scroll("right")}
         className="p-2 rounded-full shadow-md hover:bg-[#FF5A5F] dark:hover:bg-[#FF5A5F] transition"

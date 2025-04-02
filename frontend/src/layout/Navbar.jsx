@@ -41,7 +41,6 @@ const Navbar = () => {
             />
             <button
               className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-[#FF385C] transition-all duration-300 hover:scale-110"
-              // onClick={() =>}
               type="submit"
             >
               🔍
