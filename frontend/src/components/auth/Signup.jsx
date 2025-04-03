@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 export default function Signup() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    image: "",
     name: "",
     email: "",
     password: "",
@@ -16,11 +17,16 @@ export default function Signup() {
   };
 
   const handleSubmit = async (e) => {
+    const form = new FormData();
+    form.append("image", formData.image);
+    form.append("name", formData.name);
+    form.append("email", formData.email);
+    form.append("password", formData.password);
+
     e.preventDefault();
     const response = await fetch("http://localhost:3000/api/signup", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
+      body: formData,
     });
     const data = await response.json();
     localStorage.setItem("auth-token", data.token);
@@ -28,6 +34,7 @@ export default function Signup() {
     navigate("/");
   };
 
+  console.log(formData);
   return (
     <Box className="flex justify-center items-center min-h-screen bg-gray-50 px-6">
       <Card className="w-full max-w-md shadow-2xl rounded-3xl p-10 bg-white">
@@ -41,7 +48,19 @@ export default function Signup() {
           Sign up to get started
         </Typography>
         <CardContent>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} encType="multipart/form-data">
+            <div className="m-auto bg-zinc-400 border rounded-full border-zinc-600 mb-4 w-32 h-32 flex items-center justify-center overflow-hidden relative">
+              <input
+                type="file"
+                // className="absolute inset-0 opacity-0 cursor-pointer"
+                required
+                name="image"
+                onChange={(e) =>
+                  setFormData({ ...formData, image: e.target.files[0] })
+                }
+              />
+            </div>
+
             <div className="mb-4">
               <TextField
                 type="text"

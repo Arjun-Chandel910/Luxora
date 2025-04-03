@@ -5,7 +5,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-
+  image: {
+    url: String,
+    filename: String,
+  },
   email: {
     type: String,
     required: true,

@@ -5,14 +5,19 @@ const User = require("../models/user.model");
 const AppError = require("../middlewares/AppError");
 const { default: mongoose } = require("mongoose");
 
+const { storage } = require("../../cloudConfig");
+//(for image upload)
+const multer = require("multer"); //to parse the multiform data
+const upload = multer({ storage });
+
 const bcrypt = require("bcryptjs");
 const authMiddleware = require("../middlewares/jwt");
 
 jwt = require("jsonwebtoken");
-
-router.post("/signup", async (req, res, next) => {
+router.post("/signup", upload.single("image"), async (req, res, next) => {
+  const url = req.file.path;
+  const filename = req.file.filename;
   let { name, email, password } = req.body;
-
   let checkUser = await User.findOne({ email: email });
   if (checkUser) {
     return next(new AppError(400, "User already exists"));
@@ -24,6 +29,7 @@ router.post("/signup", async (req, res, next) => {
 
   // register
   const user = new User({
+    image: { url, filename },
     name,
     email,
     password: hash,
