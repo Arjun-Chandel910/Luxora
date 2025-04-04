@@ -26,7 +26,7 @@ export default function Signup() {
     e.preventDefault();
     const response = await fetch("http://localhost:3000/api/signup", {
       method: "POST",
-      body: formData,
+      body: form,
     });
     const data = await response.json();
     localStorage.setItem("auth-token", data.token);

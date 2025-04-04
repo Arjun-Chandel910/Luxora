@@ -49,9 +49,15 @@ export default function BasicMenu() {
         MenuListProps={{ "aria-labelledby": "basic-button" }}
         className="mt-2"
       >
-        <MenuItem onClick={handleClose} className="hover:bg-gray-100 px-6 py-3">
-          Profile
-        </MenuItem>
+        <Link to="profile">
+          {" "}
+          <MenuItem
+            onClick={handleClose}
+            className="hover:bg-gray-100 px-6 py-3"
+          >
+            Profile
+          </MenuItem>
+        </Link>
         <MenuItem onClick={handleClose} className="hover:bg-gray-100 px-6 py-3">
           My Account
         </MenuItem>

@@ -15,6 +15,10 @@ const authMiddleware = require("../middlewares/jwt");
 
 jwt = require("jsonwebtoken");
 router.post("/signup", upload.single("image"), async (req, res, next) => {
+  if (!req.file) {
+    return next(new AppError(400, "Image is required"));
+  }
+  console.log(req.file);
   const url = req.file.path;
   const filename = req.file.filename;
   let { name, email, password } = req.body;
@@ -76,6 +80,22 @@ router.delete("/", authMiddleware, async (req, res, next) => {
     }
     const data = await User.findByIdAndDelete(UserId);
     res.json({ deletedUser: data });
+  } catch (err) {
+    return next(new AppError(500, "Internal server error"));
+  }
+});
+
+// user profile
+router.get("/profile", authMiddleware, async (req, res, next) => {
+  try {
+    const UserId = req.user.id || req.user._id;
+    const userF = await User.findById(UserId);
+
+    if (!userF) {
+      return next(new AppError(403, "InvalidUser"));
+    }
+
+    res.json(userF);
   } catch (err) {
     return next(new AppError(500, "Internal server error"));
   }
