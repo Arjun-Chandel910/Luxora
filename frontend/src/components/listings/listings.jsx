@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import Cards from "./Cards";
 import ListingContext from "../../context/listingContext";
-import Filters from "./filters";
+import Filters from "./Filters";
 
 const Listings = () => {
   const { getListings } = useContext(ListingContext);

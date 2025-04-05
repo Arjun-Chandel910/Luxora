@@ -44,6 +44,32 @@ router.get("/s", async (req, res, next) => {
     return next(new AppError(500, err.message || "Internal Server Error"));
   }
 });
+// show listings of a user
+router.get("/userListings", authMiddleware, async (req, res, next) => {
+  try {
+    const UserId = req.user.id || req.user._id;
+    console.log(typeof UserId);
+    // ✅ Sanity check
+    if (!mongoose.Types.ObjectId.isValid(UserId)) {
+      return next(new AppError(400, "Invalid User ID format"));
+    }
+
+    // ✅ Check if user actually exists
+    const userF = await User.findById(UserId);
+    if (!userF) {
+      return next(new AppError(403, "InvalidUser"));
+    }
+
+    // ✅ Fetch listings
+    const listings = await Listing.find({ user: UserId });
+
+    console.log("Listings count:", listings.length);
+    res.status(200).json({ listings });
+  } catch (err) {
+    console.error("Error:", err);
+    return next(new AppError(500, err.message || "Internal Server Error"));
+  }
+});
 
 // Get a listing by ID
 router.get("/:id", async (req, res, next) => {
@@ -54,7 +80,6 @@ router.get("/:id", async (req, res, next) => {
     // if (!userF) {
     //   return next(new AppError(403, "InvalidUser"));
     // }
-
     if (!mongoose.Types.ObjectId.isValid(id)) {
       // is error only checks the format of id , if the id is of some
       //  listing that previously existed than we need to check if the listing

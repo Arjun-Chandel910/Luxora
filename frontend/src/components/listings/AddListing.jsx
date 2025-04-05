@@ -22,7 +22,7 @@ const AddListing = () => {
   };
   const handleForm = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
+    const formData = new FormData(); //
     formData.append("title", card.title);
     formData.append("description", card.description);
     formData.append("price", card.price);

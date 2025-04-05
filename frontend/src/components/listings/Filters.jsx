@@ -109,6 +109,7 @@ export default function Filters({ arr, setArr }) {
           py: 1,
           overflowX: "auto",
           width: "60%",
+          cursor: "pointer",
           scrollSnapType: "x mandatory",
           "& > *": { scrollSnapAlign: "center" },
           "::-webkit-scrollbar": { display: "none" },
