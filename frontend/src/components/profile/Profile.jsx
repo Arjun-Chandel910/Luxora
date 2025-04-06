@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ListingContext from "../../context/listingContext";
-
+import { Link } from "react-router-dom";
 export const Profile = () => {
   const { authenticateUser } = useContext(ListingContext);
   const token = authenticateUser();
@@ -24,11 +24,12 @@ export const Profile = () => {
       setUser(data);
 
       const listingRes = await fetch(
-        `http://localhost:3000/api/listings/user/${data._id}`,
+        `http://localhost:3000/listing/userListings`,
         {
           method: "GET",
           headers: {
             "content-type": "application/json",
+            "auth-token": `${token}`,
           },
         }
       );
@@ -39,13 +40,14 @@ export const Profile = () => {
 
     fetchUser();
   }, []);
+  console.log(userListings);
 
   return (
     <div className="min-h-screen bg-gray-100 px-6 py-12">
       <div className="max-w-6xl mx-auto">
-        {/* Profile Section */}
+        {/* profile Section */}
         <div className="bg-white rounded-2xl shadow border border-gray-200 p-6 flex flex-col md:flex-row items-center md:items-start gap-6 mb-12">
-          {/* Profile Image */}
+          {/*profile Image */}
           <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-rose-300 shadow">
             <img
               src={user?.image?.url || "/default-profile.png"}
@@ -54,7 +56,7 @@ export const Profile = () => {
             />
           </div>
 
-          {/* User Info */}
+          {/* user Info */}
           <div className="flex flex-col text-center md:text-left">
             <h1 className="text-2xl font-bold text-gray-800">{user?.name}</h1>
             <p className="text-gray-500 mt-1 text-md">{user?.email}</p>
@@ -64,38 +66,39 @@ export const Profile = () => {
           </div>
         </div>
 
-        {/* Listings Section */}
+        {/* listing section */}
         <div>
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+          <h2 className="text-2xl font-semibold text-gray-500 mb-4 text-center mb-6">
             Your Listings
           </h2>
           {userListings.length === 0 ? (
             <p className="text-gray-500 text-center">No listings posted yet.</p>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {userListings.map((listing) => (
-                <div
-                  key={listing._id}
-                  className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow hover:shadow-md transition-shadow duration-300"
-                >
-                  <div className="relative h-48 w-full">
-                    <img
-                      src={listing.image?.url || "/listing-placeholder.jpg"}
-                      alt={listing.title}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-semibold text-gray-800 truncate">
-                      {listing.title}
-                    </h3>
-                    <p className="text-sm text-gray-500">{listing.location}</p>
-                    <p className="text-rose-500 font-medium mt-2">
-                      ${listing.price} / night
-                    </p>
-                  </div>
-                </div>
-              ))}
+            <div className="flex flex-col gap-6">
+              {userListings.listings.map((d) => {
+                return (
+                  <Link to={`/${d._id}`} className="no-underline">
+                    <div className="cursor-pointer  hover:scale-[1.01] bg-white shadow-lg transition flex flex-row justify-between  w-[80%] mx-auto h-30  rounded-4xl overflow-x-auto overflow-y-auto">
+                      <div className="w-1/4">
+                        {" "}
+                        <img
+                          src={d.image.url}
+                          className="h-30 w-1/1 rounded-4xl bg-rose-400"
+                          alt=""
+                        />
+                      </div>
+
+                      <div className="w-3/4  flex-col ml-50 ">
+                        <h1 className="text-[#FF385C] text-2xl">{d.title}</h1>
+                        <h1 className="text-sm text-gray-500 mb-4 mt-1">
+                          {d.location}
+                        </h1>
+                        <h1 className="">{d.price}/night</h1>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           )}
         </div>

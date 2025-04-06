@@ -48,22 +48,16 @@ router.get("/s", async (req, res, next) => {
 router.get("/userListings", authMiddleware, async (req, res, next) => {
   try {
     const UserId = req.user.id || req.user._id;
-    console.log(typeof UserId);
-    // ✅ Sanity check
+
     if (!mongoose.Types.ObjectId.isValid(UserId)) {
       return next(new AppError(400, "Invalid User ID format"));
     }
-
-    // ✅ Check if user actually exists
     const userF = await User.findById(UserId);
     if (!userF) {
       return next(new AppError(403, "InvalidUser"));
     }
-
-    // ✅ Fetch listings
     const listings = await Listing.find({ user: UserId });
 
-    console.log("Listings count:", listings.length);
     res.status(200).json({ listings });
   } catch (err) {
     console.error("Error:", err);
