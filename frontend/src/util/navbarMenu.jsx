@@ -27,6 +27,11 @@ export default function BasicMenu() {
     navigate("/");
   };
 
+  let [token, setToken] = React.useState();
+  React.useEffect(() => {
+    setToken(authenticateUser());
+  });
+
   return (
     <div>
       <div
@@ -49,29 +54,46 @@ export default function BasicMenu() {
         MenuListProps={{ "aria-labelledby": "basic-button" }}
         className="mt-2"
       >
-        <Link to="profile">
-          {" "}
-          <MenuItem
-            onClick={handleClose}
-            className="hover:bg-gray-100 px-6 py-3"
-          >
-            Profile
-          </MenuItem>
-        </Link>
-        <MenuItem onClick={handleClose} className="hover:bg-gray-100 px-6 py-3">
-          My Account
-        </MenuItem>
-        <MenuItem onClick={handleClose} className="hover:bg-gray-100 px-6 py-3">
-          <Link to="/signup" className="text-gray-800">
-            Signup
-          </Link>
-        </MenuItem>
-        <MenuItem
-          onClick={handleLogout}
-          className="hover:bg-gray-100 px-6 py-3 text-red-500"
-        >
-          Logout
-        </MenuItem>
+        {token ? (
+          <>
+            <Link to="profile">
+              {" "}
+              <MenuItem
+                onClick={handleClose}
+                className="hover:bg-gray-100 px-6 py-3"
+              >
+                Profile
+              </MenuItem>
+            </Link>
+
+            <MenuItem
+              onClick={handleLogout}
+              className="hover:bg-gray-100 px-6 py-3 text-red-500"
+            >
+              Logout
+            </MenuItem>
+          </>
+        ) : (
+          <>
+            {" "}
+            <MenuItem
+              onClick={handleClose}
+              className="hover:bg-gray-100 px-6 py-3"
+            >
+              <Link to="/signup" className="text-gray-800">
+                Signup
+              </Link>
+            </MenuItem>
+            <MenuItem
+              onClick={handleClose}
+              className="hover:bg-gray-100 px-6 py-3"
+            >
+              <Link to="/login" className="text-gray-800">
+                Login{" "}
+              </Link>
+            </MenuItem>
+          </>
+        )}
       </Menu>
     </div>
   );

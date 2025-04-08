@@ -25,7 +25,7 @@ const Navbar = () => {
           onClick={() => navigate("/")}
         >
           <StarHalfIcon className="text-[#FF385C] text-4xl" />
-          <h1 className="text-gray-900 text-3xl font-semibold ml-2 tracking-wide">
+          <h1 className="text-gray-900 text-3xl font-semibold ml-2 tracking-wide italic">
             Luxora
           </h1>
         </div>
