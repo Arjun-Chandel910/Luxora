@@ -61,7 +61,7 @@ const SingleCard = () => {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col items-center justify-center text-center w-full max-w-3xl mx-auto gap-6 p-6 bg-white text-gray-900 shadow-md rounded-xl mt-[-50px]">
+      <div className="min-h-screen flex flex-col items-center justify-center text-center w-full max-w-3xl mx-auto gap-6 p-6 bg-white text-gray-900 shadow-md rounded-xl mt-[-50 px]">
         <h1 className="text-2xl font-bold text-red-500">{card.title}</h1>
         <img
           src={card.image.url}

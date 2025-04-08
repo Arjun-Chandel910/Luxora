@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import ListingContext from "../../context/listingContext";
 import ReviewCard from "./ReviewCard";
-import Divider from "@mui/material/Divider";
 import ReviewModal from "../../util/AddReviewModal";
 
 const Reviews = ({ id }) => {

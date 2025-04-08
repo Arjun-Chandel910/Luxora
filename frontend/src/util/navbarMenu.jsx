@@ -55,7 +55,7 @@ export default function BasicMenu() {
         className="mt-2"
       >
         {token ? (
-          <>
+          <div>
             <Link to="profile">
               {" "}
               <MenuItem
@@ -72,9 +72,9 @@ export default function BasicMenu() {
             >
               Logout
             </MenuItem>
-          </>
+          </div>
         ) : (
-          <>
+          <div>
             {" "}
             <MenuItem
               onClick={handleClose}
@@ -92,7 +92,7 @@ export default function BasicMenu() {
                 Login{" "}
               </Link>
             </MenuItem>
-          </>
+          </div>
         )}
       </Menu>
     </div>
