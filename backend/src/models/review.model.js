@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 const ReviewSchema = mongoose.Schema({
+  user: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+  },
   comment: { type: String },
   rating: {
     type: Number,

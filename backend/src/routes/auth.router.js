@@ -101,4 +101,20 @@ router.get("/profile", authMiddleware, async (req, res, next) => {
   }
 });
 
+// find user by id
+router.get("/getUser/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    const userF = await User.findById(id);
+
+    if (!userF) {
+      return next(new AppError(403, "InvalidUser"));
+    }
+    res.json(userF);
+  } catch (err) {
+    return next(new AppError(500, "Internal server error"));
+  }
+});
+
 module.exports = router;

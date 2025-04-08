@@ -12,6 +12,7 @@ const Reviews = ({ id }) => {
     const rev = await getReviews(id);
     setReviews(rev);
   };
+
   useEffect(() => {
     fetchReview();
   }, [id]);
@@ -24,7 +25,6 @@ const Reviews = ({ id }) => {
         return (
           <div key={item.id || item._id}>
             <ReviewCard item={item}></ReviewCard>
-            <Divider className="!mt-4 !w-full !border-gray-300" />
           </div>
         );
       })}

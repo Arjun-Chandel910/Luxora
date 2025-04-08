@@ -198,7 +198,11 @@ router.get("/:id/allReviews", async (req, res, next) => {
     if (!listing) {
       return next(new AppError(404, "listing does not exist."));
     }
-    const listFounded = await Listing.findById(id).populate("reviews");
+    const listFounded = await Listing.findById(id).populate({
+      path: "reviews",
+      populate: { path: "user" },
+    });
+
     const reviews = listFounded.reviews;
     res.json(reviews);
   } catch (err) {
@@ -209,13 +213,18 @@ router.get("/:id/allReviews", async (req, res, next) => {
 // create a review
 router.post("/:id/review", authMiddleware, async (req, res, next) => {
   try {
+    const UserId = req.user.id || req.user._id;
+    const userF = await User.findById(UserId);
+    if (!userF) {
+      return next(new AppError(403, "InvalidUser"));
+    }
     const id = req.params.id;
     const listing = await Listing.findById(id);
     if (!listing) {
       return next(new AppError(404, "listing does not exist."));
     }
     let { rating, comment } = req.body;
-    const review = new Review({ comment, rating });
+    const review = new Review({ comment, rating, user: UserId });
     await review.save(); //save review
     // console.log(review);
     listing.reviews.push(review); //push the review

@@ -50,7 +50,10 @@ export const Profile = () => {
           {/*profile Image */}
           <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-rose-300 shadow">
             <img
-              src={user?.image?.url || "/default-profile.png"}
+              src={
+                user?.image?.url ||
+                "https://images.unsplash.com/photo-1640951613773-54706e06851d?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              }
               alt="User"
               className="w-full h-full object-cover"
             />
