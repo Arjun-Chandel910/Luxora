@@ -7,7 +7,7 @@ import DeleteModal from "../../util/DeleteModal";
 import Reviews from "../Reviews/Reviews";
 import Divider from "@mui/material/Divider";
 import { jwtDecode } from "jwt-decode";
-
+import { Link } from "react-router-dom";
 const SingleCard = () => {
   const navigate = useNavigate();
   let { id } = useParams();
@@ -75,6 +75,14 @@ const SingleCard = () => {
         <h1 className="text-base text-gray-600">
           {card.location}, {card.country}
         </h1>
+
+        <div>
+          <Link to="/booking">
+            <Button variant="contained" size="small">
+              Book
+            </Button>
+          </Link>
+        </div>
 
         {isOwner && (
           <div className="flex gap-3 mt-3">

@@ -9,9 +9,9 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  borderRadius: "auto",
-  background: "gray",
-  boxShadow: 24,
+  border: "2px solid #FF385C",
+  borderRadius: "50%",
+  boxShadow: 10,
 };
 
 export default function ProfileModal({ item }) {
