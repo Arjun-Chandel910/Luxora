@@ -21,7 +21,7 @@ const BookingSchema = new mongoose.Schema({
   },
 
   creatAt: {
-    type: Data,
+    type: Date,
     defult: Date.now,
   },
 });

@@ -7,6 +7,7 @@ const AppError = require("../middlewares/AppError");
 const { default: mongoose } = require("mongoose");
 const authMiddleware = require("../middlewares/jwt");
 const User = require("../models/user.model");
+const Booking = require("../models/booking.model");
 
 const { storage } = require("../../cloudConfig");
 //(for image upload)
@@ -92,6 +93,8 @@ router.get("/:id", async (req, res, next) => {
     return next(new AppError(500, err.message || "Internal Server Error"));
   }
 });
+
+// Book a listing
 
 // Add a listing
 router.post(
@@ -258,4 +261,34 @@ router.delete("/:id/review/:revid", authMiddleware, async (req, res, next) => {
   }
 });
 
+router.post("/:id/booking", authMiddleware, async (req, res, next) => {
+  try {
+    const { startDate, endDate } = req.body;
+    const userId = req.user.id;
+    const userF = await User.findById(userId);
+    if (!userF) {
+      return next(new AppError(403, "InvalidUser"));
+    }
+    const id = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return next(new AppError(404, "Invalid ID "));
+    }
+    const listing = await Listing.findById(id);
+    if (!listing) {
+      return next(AppError(404, "Listing not found"));
+    }
+    const booking = new Booking({
+      user: userId,
+      listing: id,
+      fromDate: startDate,
+      toDate: endDate,
+    });
+    await booking.save();
+
+    res.json(booking);
+  } catch (err) {
+    console.error("Error:", err);
+    return next(new AppError(500, err.message || "Internal Server Error"));
+  }
+});
 module.exports = router;

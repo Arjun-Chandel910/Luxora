@@ -79,7 +79,7 @@ const SingleCard = () => {
         <div>
           <Link to="/booking">
             <Button variant="contained" size="small">
-              Book
+              Book now
             </Button>
           </Link>
         </div>
