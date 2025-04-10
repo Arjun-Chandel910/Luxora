@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import ListingContext from "../../context/listingContext";
 import ReviewCard from "./ReviewCard";
-import ReviewModal from "../../util/AddReviewModal";
+import ReviewModal from "../../Modals/AddReviewModal";
 
 const Reviews = ({ id }) => {
   const { getReviews } = useContext(ListingContext);

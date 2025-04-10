@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
-import BasicMenu from "../util/navbarMenu";
+import BasicMenu from "../Modals/navbarMenu";
 import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const navigate = useNavigate();

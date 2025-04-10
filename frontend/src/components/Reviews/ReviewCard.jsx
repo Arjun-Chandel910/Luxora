@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Rating from "@mui/material/Rating";
-import ProfileModal from "../../util/ProfileModal";
+import ProfileModal from "../../Modals/ProfileModal";
 
 const ReviewCard = ({ item }) => {
   console.log(item);

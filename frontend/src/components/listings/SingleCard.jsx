@@ -3,11 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import ListingContext from "../../context/listingContext";
 import Button from "@mui/material/Button";
 import LuxoraMap from "../maps/LuxoraMap";
-import DeleteModal from "../../util/DeleteModal";
+import DeleteModal from "../../Modals/DeleteModal";
+import CalenderModal from "../../Modals/CalenderModal";
 import Reviews from "../Reviews/Reviews";
 import Divider from "@mui/material/Divider";
 import { jwtDecode } from "jwt-decode";
 import { Link } from "react-router-dom";
+
 const SingleCard = () => {
   const navigate = useNavigate();
   let { id } = useParams();
@@ -77,11 +79,7 @@ const SingleCard = () => {
         </h1>
 
         <div>
-          <Link to="/booking">
-            <Button variant="contained" size="small">
-              Book now
-            </Button>
-          </Link>
+          <CalenderModal id={id} />
         </div>
 
         {isOwner && (

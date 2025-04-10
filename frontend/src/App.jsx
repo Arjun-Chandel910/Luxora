@@ -12,7 +12,7 @@ import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 import ProtectedRoute from "./components/listings/ProtectedRoute";
 import { Profile } from "./components/profile/Profile";
-import Calender from "./components/booking/Calender";
+
 function App() {
   return (
     <>
@@ -29,7 +29,6 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/login" element={<Login />} />
-                <Route path="/booking" element={<Calender />} />
                 <Route element={<ProtectedRoute />}>
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/add" element={<AddListing />} />
