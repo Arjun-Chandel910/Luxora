@@ -1,7 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { DateRangePicker } from "react-date-range";
+import { DateRange } from "react-date-range";
 import Button from "@mui/material/Button";
 const style = {
   position: "absolute",
@@ -11,10 +11,13 @@ const style = {
   boxShadow: 24,
 };
 
-export default function BasicModal() {
+export default function CalenderModal({ id }) {
   const [open, setOpen] = React.useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  let [bookings, setBookings] = React.useState([]);
+  let [bookedDates, setBookedDates] = React.useState([]);
 
   let [range, setRange] = React.useState({
     // this is passed in the ranges field in the DateRangePicker component
@@ -31,11 +34,66 @@ export default function BasicModal() {
   const handleSeletion = (ranges) => {
     setRange(ranges.selection);
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    console.log("startDate" + range.startDate);
-    console.log("endDate" + range.endDate);
+  //fetching all the bookings for the listings
+  React.useEffect(() => {
+    const fetchBooking = async () => {
+      const token = localStorage.getItem("auth-token");
+      if (!token) {
+        console.error("Unauthorized: No token");
+        return;
+      }
+      const response = await fetch(
+        `http://localhost:3000/listing/${id}/booking`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            "auth-token": `${token}`,
+          },
+        }
+      );
+      const data = await response.json();
+
+      setBookings(data);
+    };
+    fetchBooking();
+  }, [id]);
+  // console.log(bookings);
+  React.useEffect(() => {
+    const book = bookings.map((d) => ({
+      fromDate: d.fromDate,
+      toDate: d.toDate,
+    }));
+    console.log(book);
+  }, [bookings]);
+
+  // Range Selection and sending it to backend.
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("auth-token");
+    if (!token) {
+      console.error("Unauthorized: No token");
+      return;
+    }
+    const response = await fetch(
+      `http://localhost:3000/listing/${id}/booking`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          "auth-token": `${token}`,
+        },
+        body: JSON.stringify({
+          startDate: range.startDate,
+          endDate: range.endDate,
+        }),
+      }
+    );
+    console.log(new Date(range.startDate));
+    console.log(range.endDate);
+    const data = await response.json();
+    console.log(data);
   };
   return (
     <div>
@@ -60,10 +118,11 @@ export default function BasicModal() {
                 className="flex flex-col justify-center items-center"
               >
                 <div>
-                  <DateRangePicker
+                  <DateRange
                     ranges={[range]} // constains the range object for initial seletion , and also when the range is selected
                     onChange={handleSeletion} // sets the range
                     minDate={new Date()}
+                    blockedDates={[bookings]}
                     // scroll={{ enabled: true }}
                   />
                 </div>

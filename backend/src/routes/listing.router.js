@@ -261,6 +261,30 @@ router.delete("/:id/review/:revid", authMiddleware, async (req, res, next) => {
   }
 });
 
+router.get("/:id/booking", authMiddleware, async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const userF = await User.findById(userId);
+    if (!userF) {
+      return next(new AppError(403, "InvalidUser"));
+    }
+    const id = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return next(new AppError(404, "Invalid ID "));
+    }
+    const listing = await Listing.findById(id);
+    if (!listing) {
+      return next(AppError(404, "Listing not found"));
+    }
+
+    const booking = await Booking.find({ listing: id });
+    res.json(booking);
+    return booking;
+  } catch (err) {
+    console.error("Error:", err);
+    return next(new AppError(500, err.message || "Internal Server Error"));
+  }
+});
 router.post("/:id/booking", authMiddleware, async (req, res, next) => {
   try {
     const { startDate, endDate } = req.body;

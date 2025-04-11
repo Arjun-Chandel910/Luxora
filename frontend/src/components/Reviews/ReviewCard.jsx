@@ -3,7 +3,6 @@ import Rating from "@mui/material/Rating";
 import ProfileModal from "../../Modals/ProfileModal";
 
 const ReviewCard = ({ item }) => {
-  console.log(item);
   return (
     <div className="w-[350px] h-[180px] bg-white shadow-lg rounded-2xl p-5 flex flex-col justify-between border border-gray-200">
       <div className="flex items-center gap-4">
