@@ -288,6 +288,12 @@ router.get("/:id/booking", authMiddleware, async (req, res, next) => {
 router.post("/:id/booking", authMiddleware, async (req, res, next) => {
   try {
     const { startDate, endDate } = req.body;
+    const diffTime =
+      new Date(endDate).getTime() - new Date(startDate).getTime();
+    //date cant be subtracted so we count time difference
+    //  in miliseconds and they convert it to days
+    const TotalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
     const userId = req.user.id;
     const userF = await User.findById(userId);
     if (!userF) {
@@ -298,14 +304,18 @@ router.post("/:id/booking", authMiddleware, async (req, res, next) => {
       return next(new AppError(404, "Invalid ID "));
     }
     const listing = await Listing.findById(id);
+
     if (!listing) {
-      return next(AppError(404, "Listing not found"));
+      return next(new AppError(404, "Listing not found"));
     }
+    const price = listing.price;
+    const totalAmt = price * TotalDays;
     const booking = new Booking({
       user: userId,
       listing: id,
       fromDate: startDate,
       toDate: endDate,
+      totalAmount: totalAmt,
     });
     await booking.save();
 

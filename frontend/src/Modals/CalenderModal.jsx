@@ -11,13 +11,12 @@ const style = {
   boxShadow: 24,
 };
 
-export default function CalenderModal({ id }) {
+export default function CalenderModal({ id, token }) {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   let [bookings, setBookings] = React.useState([]);
-  let [bookedDates, setBookedDates] = React.useState([]);
 
   let [range, setRange] = React.useState({
     // this is passed in the ranges field in the DateRangePicker component

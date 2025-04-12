@@ -24,6 +24,7 @@ const SingleCard = () => {
     country: "",
     image: "",
   });
+  const [token, setToken] = useState();
   const [isOwner, setIsOwner] = useState(false);
 
   const checkOwner = async (listing) => {
@@ -35,6 +36,7 @@ const SingleCard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setToken(authenticateUser());
       const singleCard = await getSingleListing(id);
       if (singleCard) {
         setCard({
@@ -72,15 +74,18 @@ const SingleCard = () => {
         />
         <h1 className="text-base text-gray-700 italic">{card.description}</h1>
         <h1 className="text-xl font-semibold text-red-500">
-          &#8377; {card.price}
+          {" "}
+          &#8377; {card.price}/ <span className="italic text-lg ">night </span>
         </h1>
         <h1 className="text-base text-gray-600">
           {card.location}, {card.country}
         </h1>
 
-        <div>
-          <CalenderModal id={id} />
-        </div>
+        {token && (
+          <div>
+            <CalenderModal id={id} token={token} />
+          </div>
+        )}
 
         {isOwner && (
           <div className="flex gap-3 mt-3">
