@@ -95,6 +95,18 @@ export default function CalenderModal({ id }) {
     const data = await response.json();
     console.log(data);
   };
+
+  //disabled dates calculation
+  const disabled = [];
+  bookings.map((obj) => {
+    const start = new Date(obj.fromDate);
+    const end = new Date(obj.toDate);
+    while (start <= end) {
+      disabled.push(new Date(start));
+      start.setDate(start.getDate() + 1);
+    }
+  });
+  console.log(disabled);
   return (
     <div>
       <Button onClick={handleOpen} variant="contained" size="small">
@@ -122,7 +134,7 @@ export default function CalenderModal({ id }) {
                     ranges={[range]} // constains the range object for initial seletion , and also when the range is selected
                     onChange={handleSeletion} // sets the range
                     minDate={new Date()}
-                    blockedDates={[bookings]}
+                    disabledDates={disabled}
                     // scroll={{ enabled: true }}
                   />
                 </div>
