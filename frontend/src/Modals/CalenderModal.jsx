@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { DateRange } from "react-date-range";
 import Button from "@mui/material/Button";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -12,6 +13,7 @@ const style = {
 };
 
 export default function CalenderModal({ id, token }) {
+  const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -64,7 +66,6 @@ export default function CalenderModal({ id, token }) {
       fromDate: d.fromDate,
       toDate: d.toDate,
     }));
-    console.log(book);
   }, [bookings]);
 
   // Range Selection and sending it to backend.
@@ -89,10 +90,33 @@ export default function CalenderModal({ id, token }) {
         }),
       }
     );
-    console.log(new Date(range.startDate));
-    console.log(range.endDate);
     const data = await response.json();
-    console.log(data);
+    console.log(data.razorpayOrderId);
+    async function payNow() {
+      // Open Razorpay Checkout
+      const options = {
+        key: razorpayKey, // Replace with your Razorpay key_id
+        amount: data.totalAmount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+        currency: "INR",
+        name: "Acme Corp",
+        description: "Test Transaction",
+        order_id: data.razorpayOrderId, // This is the order_id created in the backend
+        callback_url: "http://localhost:3000/payment-success", // Your success URL
+        prefill: {
+          name: "Arjun Chandel",
+          email: "gaurav.kumar@example.com",
+          contact: "9999999999",
+        },
+        theme: {
+          color: "#F37254",
+        },
+      };
+
+      const rzp = new Razorpay(options); // Initialize razorpay checkout
+      //  instance with order details( opens secure payment UI)
+      rzp.open();
+    }
+    payNow();
   };
 
   //disabled dates calculation
@@ -105,7 +129,7 @@ export default function CalenderModal({ id, token }) {
       start.setDate(start.getDate() + 1);
     }
   });
-  console.log(disabled);
+
   return (
     <div>
       <Button onClick={handleOpen} variant="contained" size="small">
@@ -134,7 +158,6 @@ export default function CalenderModal({ id, token }) {
                     onChange={handleSeletion} // sets the range
                     minDate={new Date()}
                     disabledDates={disabled}
-                    // scroll={{ enabled: true }}
                   />
                 </div>
                 <div>
@@ -149,7 +172,8 @@ export default function CalenderModal({ id, token }) {
                       textAlign: "center",
                     }}
                   >
-                    Book now
+                    {" "}
+                    Book now{" "}
                   </Button>
                 </div>
               </form>

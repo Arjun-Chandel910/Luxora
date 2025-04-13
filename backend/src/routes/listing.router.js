@@ -8,6 +8,7 @@ const { default: mongoose } = require("mongoose");
 const authMiddleware = require("../middlewares/jwt");
 const User = require("../models/user.model");
 const Booking = require("../models/booking.model");
+const Razorpay = require("razorpay");
 
 const { storage } = require("../../cloudConfig");
 //(for image upload)
@@ -292,7 +293,7 @@ router.post("/:id/booking", authMiddleware, async (req, res, next) => {
       new Date(endDate).getTime() - new Date(startDate).getTime();
     //date cant be subtracted so we count time difference
     //  in miliseconds and they convert it to days
-    const TotalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const TotalDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
 
     const userId = req.user.id;
     const userF = await User.findById(userId);
@@ -310,6 +311,7 @@ router.post("/:id/booking", authMiddleware, async (req, res, next) => {
     }
     const price = listing.price;
     const totalAmt = price * TotalDays;
+    console.log(TotalDays);
     const booking = new Booking({
       user: userId,
       listing: id,
@@ -317,6 +319,21 @@ router.post("/:id/booking", authMiddleware, async (req, res, next) => {
       toDate: endDate,
       totalAmount: totalAmt,
     });
+
+    //razorpay
+    const instance = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_SECRET,
+    });
+
+    const order = await instance.orders.create({
+      amount: 500000, // amount in paise
+      currency: "INR",
+      receipt: "123",
+    });
+
+    booking.razorpayOrderId = order.id;
+    booking.paymentStatus = "PENDING";
     await booking.save();
 
     res.json(booking);
