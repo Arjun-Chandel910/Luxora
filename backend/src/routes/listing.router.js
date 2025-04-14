@@ -342,4 +342,5 @@ router.post("/:id/booking", authMiddleware, async (req, res, next) => {
     return next(new AppError(500, err.message || "Internal Server Error"));
   }
 });
+
 module.exports = router;

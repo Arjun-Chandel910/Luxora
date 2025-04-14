@@ -17,7 +17,9 @@ const Reviews = ({ id }) => {
   }, [id]);
   return (
     <div className="flex flex-wrap justify-start items-start w-3/4 mx-auto gap-4 ">
-      <ReviewModal id={id} fetchReview={fetchReview}></ReviewModal>
+      <div className="w-full ">
+        <ReviewModal id={id} fetchReview={fetchReview}></ReviewModal>
+      </div>
       <br />
       <br />
       {reviews.map((item) => {

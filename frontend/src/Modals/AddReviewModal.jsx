@@ -5,6 +5,7 @@ import Modal from "@mui/material/Modal";
 import Rating from "@mui/material/Rating";
 import TextField from "@mui/material/TextField";
 import ListingContext from "../context/listingContext";
+import Input from "@mui/joy/Input";
 import { useNavigate } from "react-router-dom";
 
 const style = {
@@ -55,10 +56,26 @@ export default function AddReviewModal({ id, fetchReview }) {
   };
   return (
     <div>
-      <Button variant="contained" color="success" onClick={handleAddReview}>
-        Add Review
-      </Button>
-
+      <div onClick={handleAddReview} className="mx-8">
+        <Button
+          variant="contained"
+          color="success"
+          sx={{
+            background: "#FF385C",
+            color: "white",
+            position: "relative",
+            right: "0px",
+          }}
+        >
+          Add Review
+        </Button>
+        &nbsp;
+        <TextField
+          variant="standard"
+          placeholder="write a review"
+          size="large"
+        />
+      </div>
       <Modal
         open={open}
         onClose={handleClose}
