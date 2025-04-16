@@ -161,10 +161,12 @@ router.put("/:id", authMiddleware, async (req, res, next) => {
     if (!listing) {
       return next(new AppError(404, "Some error occured"));
     }
+    const success = true;
 
-    res.json(listing);
+    res.json({ success, message: "Listing updated!" });
   } catch (err) {
     console.error("Error:", err);
+    res.json({ success: false, message: err });
     return next(new AppError(500, err.message || "Internal Server Error"));
   }
 });

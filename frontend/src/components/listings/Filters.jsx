@@ -92,7 +92,7 @@ export default function Filters({ arr, setArr }) {
   };
 
   return (
-    <div className="flex items-center justify-center mt-6 space-x-4">
+    <div className="flex items-center justify-center  space-x-4">
       {/*left arrow */}
       <button
         onClick={() => scroll("left")}

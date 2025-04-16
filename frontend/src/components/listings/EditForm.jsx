@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ListingContext from "../../context/listingContext";
 const EditForm = () => {
   const navigate = useNavigate();
+
   const { getSingleListing, updateListing } = useContext(ListingContext);
   const { id } = useParams();
 
@@ -83,24 +84,6 @@ const EditForm = () => {
               },
             }}
           />
-          {/* 
-          <input
-            required
-            id="outlined-multiline-flexible"
-            label="Image"
-            type="file"
-            accept="image/*"
-            value={card.image}
-            slotprops={{
-              inputLabel: {
-                shrink: true,
-              },
-            }}
-            className="w-40 h-12 px-4 border
-             border-gray-300 rounded-full 
-             focus:outline-none focus:ring-2
-              focus:ring-blue-500"
-          /> */}
           <TextField
             name="price"
             onChange={handleInput}

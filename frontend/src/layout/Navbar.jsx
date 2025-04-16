@@ -18,7 +18,7 @@ const Navbar = () => {
     navigate(`/s?location=${search}`);
   };
   return (
-    <div className="navbar fixed top-0 right-0 w-full bg-white shadow-md border-b border-gray-200 z-[50] transition-all duration-300">
+    <div className="navbar fixed top-0 right-0 w-full bg-white shadow-md border-b border-gray-200 z-[50] transition-all duration-300 ">
       <div className="flex justify-between items-center px-10 py-4 max-w-7xl mx-auto">
         <div
           className="flex items-center cursor-pointer transition-transform duration-300 hover:scale-105"

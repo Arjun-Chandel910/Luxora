@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import ListingContext from "./listingContext";
-
+import FlashContext from "./FlashContext";
 const ListingState = ({ children }) => {
+  useContext;
+  const { showFlash } = useContext(FlashContext);
   //listing methods
 
   //seach listings based on location
@@ -39,26 +42,36 @@ const ListingState = ({ children }) => {
   };
   //update
   const updateListing = async (id, card) => {
-    const token = localStorage.getItem("auth-token");
-    console.log(token);
-    if (!token) {
-      console.log("Unauthorized: No token");
-      return;
+    try {
+      const token = localStorage.getItem("auth-token");
+      console.log(token);
+      if (!token) {
+        console.log("Unauthorized: No token");
+        return;
+      }
+      const response = await fetch(`http://localhost:3000/listing/${id}`, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+          "auth-token": token,
+        },
+        body: JSON.stringify({
+          title: card.title,
+          description: card.description,
+          price: card.price,
+          country: card.country,
+          location: card.location,
+        }),
+      });
+      const data = await response.json();
+      showFlash({ success: data.success, message: data.message });
+    } catch (error) {
+      console.error("Network Error:", error);
+      showFlash({
+        success: false,
+        message: "Something went wrong. Please try again.",
+      });
     }
-    const response = await fetch(`http://localhost:3000/listing/${id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-        "auth-token": `${token}`,
-      },
-      body: JSON.stringify({
-        title: card.title,
-        description: card.description,
-        price: card.price,
-        country: card.country,
-        location: card.location,
-      }),
-    });
   };
   //delete
   const deleteListing = async (id) => {
