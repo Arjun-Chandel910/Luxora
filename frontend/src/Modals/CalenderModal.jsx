@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { DateRange } from "react-date-range";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -13,6 +14,7 @@ const style = {
 };
 
 export default function CalenderModal({ id, token }) {
+  const navigate = useNavigate();
   const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
   const [open, setOpen] = React.useState(false);
 
@@ -93,7 +95,7 @@ export default function CalenderModal({ id, token }) {
     const data = await response.json();
     console.log(data.razorpayOrderId);
     async function payNow() {
-      // Open Razorpay Checkout
+      // Open Razorpay Checkout and the handler function verifies the payment in the backend
       const options = {
         key: razorpayKey, // Replace with your Razorpay key_id
         amount: data.totalAmount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -101,7 +103,35 @@ export default function CalenderModal({ id, token }) {
         name: "Acme Corp",
         description: "Test Transaction",
         order_id: data.razorpayOrderId, // This is the order_id created in the backend
-        callback_url: "http://localhost:3000/payment-success", // Your success URL
+        handler: async function (response) {
+          //this runs automatically after the payment
+          const token = localStorage.getItem("auth-token");
+          if (!token) {
+            console.error("Unauthorized: No token");
+            return;
+          }
+          const result = await fetch("http://localhost:3000/payment-success", {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              "auth-token": `${token}`,
+            },
+            body: JSON.stringify({
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
+            }),
+          });
+          const data = await result.json();
+          if (data.success) {
+            console.log("Payment verified");
+            handleClose();
+            navigate("/profile");
+          } else {
+            alert("Payment verification failed. Don't be a fraud.");
+          }
+        },
+
         prefill: {
           name: "Arjun Chandel",
           email: "gaurav.kumar@example.com",
@@ -117,6 +147,11 @@ export default function CalenderModal({ id, token }) {
       rzp.open();
     }
     payNow();
+    setTimeout(() => {
+      handleClose();
+    }, 2000);
+
+    navigate("/profile");
   };
 
   //disabled dates calculation

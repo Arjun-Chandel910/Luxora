@@ -8,6 +8,8 @@ const crypto = require("crypto");
 //router
 const ListingRouter = require("./src/routes/listing.router");
 const UserRouter = require("./src/routes/auth.router");
+const authMiddleware = require("./src/middlewares/jwt");
+const User = require("./src/models/user.model");
 
 //middlewares
 app.use(express.json());
@@ -21,8 +23,14 @@ mongoose
   .catch(() => {
     console.log("Error in db");
   });
-app.post("/payment-success", async (req, res, next) => {
+app.post("/payment-success", authMiddleware, async (req, res, next) => {
   try {
+    const UserId = req.user.id || req.user._id;
+    const userF = await User.findById(UserId);
+    if (!userF) {
+      return next(new AppError(403, "InvalidUser"));
+    }
+
     const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
       req.body;
 
@@ -31,10 +39,14 @@ app.post("/payment-success", async (req, res, next) => {
       .update(razorpay_order_id + "|" + razorpay_payment_id)
       .digest("hex");
 
+    let success = true;
     if (correctSignature === razorpay_signature) {
       console.log("authentic payment");
+      res.json({ success });
     } else {
+      success = false;
       console.log("fraud deteced");
+      res.json({ success });
     }
   } catch (err) {
     return next(new AppError(500, err.message || "Internal Server Error"));
