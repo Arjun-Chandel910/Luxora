@@ -81,11 +81,9 @@ const SingleCard = () => {
           {card.location}, {card.country}
         </h1>
 
-        {token && (
-          <div>
-            <CalenderModal id={id} token={token} />
-          </div>
-        )}
+        <div>
+          <CalenderModal id={id} token={token} />
+        </div>
 
         {isOwner && (
           <div className="flex gap-3 mt-3">

@@ -4,6 +4,7 @@ import Modal from "@mui/material/Modal";
 import { DateRange } from "react-date-range";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import FlashContext from "../context/FlashContext";
 
 const style = {
   position: "absolute",
@@ -14,6 +15,7 @@ const style = {
 };
 
 export default function CalenderModal({ id, token }) {
+  const { showFlash } = React.useContext(FlashContext);
   const navigate = useNavigate();
   const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
   const [open, setOpen] = React.useState(false);
@@ -164,10 +166,18 @@ export default function CalenderModal({ id, token }) {
       start.setDate(start.getDate() + 1);
     }
   });
+  const handleBookNow = () => {
+    if (token) {
+      handleOpen();
+    } else {
+      showFlash({ success: false, message: "You need to be logged in first!" });
+      navigate("/login");
+    }
+  };
 
   return (
     <div>
-      <Button onClick={handleOpen} variant="contained" size="small">
+      <Button onClick={handleBookNow} variant="contained" size="small">
         Book Now
       </Button>
       <Modal

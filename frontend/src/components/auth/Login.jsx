@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Card, CardContent, Typography, Box } from "@mui/material";
 import { Button, TextField } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import FlashContext from "../../context/FlashContext";
 
 export default function Login() {
+  const { showFlash } = useContext(FlashContext);
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
 
@@ -12,15 +14,20 @@ export default function Login() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const response = await fetch("http://localhost:3000/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
-    const data = await response.json();
-    localStorage.setItem("auth-token", data.token);
-    navigate("/");
+    try {
+      e.preventDefault();
+      const response = await fetch("http://localhost:3000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await response.json();
+      showFlash({ success: data.success, message: data.message });
+      localStorage.setItem("auth-token", data.token);
+      navigate("/");
+    } catch (err) {
+      showFlash({ success: false, message: err });
+    }
   };
 
   return (

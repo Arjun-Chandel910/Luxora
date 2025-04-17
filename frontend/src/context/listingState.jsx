@@ -57,6 +57,7 @@ const ListingState = ({ children }) => {
         },
         body: JSON.stringify({
           title: card.title,
+
           description: card.description,
           price: card.price,
           country: card.country,
@@ -73,34 +74,51 @@ const ListingState = ({ children }) => {
       });
     }
   };
-  //delete
+  //delete a listings
   const deleteListing = async (id) => {
-    const token = localStorage.getItem("auth-token");
-    if (!token) {
-      return res.status(401).json({ message: "Unauthorized: No token" });
+    try {
+      const token = localStorage.getItem("auth-token");
+      if (!token) {
+        return res.status(401).json({ message: "Unauthorized: No token" });
+      }
+      const response = fetch(`http://localhost:3000/listing/${id}`, {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+          "auth-token": `${token}`,
+        },
+      });
+      showFlash({ success: true, message: "Listing deleted!" });
+    } catch (err) {
+      showFlash({
+        success: false,
+        message: err,
+      });
     }
-    const response = fetch(`http://localhost:3000/listing/${id}`, {
-      method: "DELETE",
-      headers: {
-        "content-type": "application/json",
-        "auth-token": `${token}`,
-      },
-    });
   };
 
-  //add
+  //add a listing
   const addListing = async (formData) => {
-    const token = localStorage.getItem("auth-token");
-    if (!token) {
-      return res.status(401).json({ message: "Unauthorized: No token" });
+    try {
+      const token = localStorage.getItem("auth-token");
+      if (!token) {
+        return res.status(401).json({ message: "Unauthorized: No token" });
+      }
+      const response = await fetch("http://localhost:3000/listing/add", {
+        method: "POST",
+        headers: {
+          "auth-token": `${token}`,
+        },
+        body: formData,
+      });
+      const data = await response.json();
+      showFlash({ success: data.success, message: data.message });
+    } catch (err) {
+      showFlash({
+        success: false,
+        message: "Something went wrong. Please try again.",
+      });
     }
-    const response = await fetch("http://localhost:3000/listing/add", {
-      method: "POST",
-      headers: {
-        "auth-token": `${token}`,
-      },
-      body: formData,
-    });
   };
   //review
   const getReviews = async (id) => {
@@ -110,30 +128,36 @@ const ListingState = ({ children }) => {
         method: "GET",
       }
     );
+
     const data = await response.json();
     return data;
   };
 
   //post a review
   const postReview = async (id, review) => {
-    const token = localStorage.getItem("auth-token");
-    if (!token) {
-      return res.status(401).json({ message: "Unauthorized: No token" });
+    try {
+      const token = localStorage.getItem("auth-token");
+      if (!token) {
+        return res.status(401).json({ message: "Unauthorized: No token" });
+      }
+      const response = await fetch(
+        `http://localhost:3000/listing/${id}/review`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            "auth-token": `${token}`,
+          },
+          body: JSON.stringify({
+            comment: review.comment,
+            rating: review.rating,
+          }),
+        }
+      );
+      showFlash({ success: true, message: "Review posted!" });
+    } catch (err) {
+      showFlash({ success: false, message: "Something went wrong!" });
     }
-    const response = await fetch(`http://localhost:3000/listing/${id}/review`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "auth-token": `${token}`,
-      },
-      body: JSON.stringify({
-        comment: review.comment,
-        rating: review.rating,
-      }),
-    });
-
-    const data = await response.json();
-    console.log(data);
   };
 
   return (

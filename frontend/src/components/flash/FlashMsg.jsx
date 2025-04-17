@@ -4,17 +4,16 @@ import FlashContext from "../../context/FlashContext";
 const FlashMsg = () => {
   const { flash } = useContext(FlashContext);
 
-  console.log(flash.type);
   if (!flash.type) return null;
   return (
     <div className="w-full text-center py-2">
       {flash.type === "success" ? (
-        <div className="border-1 border-green-500 w-1/3 mx-auto py-2 px-4 rounded-md shadow-md mb-4">
-          {flash.message}
+        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-[1000] bg-green-500 text-white font-bold  w-1/3 py-3 px-5 rounded-md shadow-lg">
+          ✓ {flash.message}
         </div>
       ) : (
-        <div className="border-1 border-rose-500 w-1/3 mx-auto py-2 px-4 rounded-md shadow-md mb-4">
-          {flash.message}
+        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-[1000] bg-rose-500 text-white font-bold w-1/3  py-3 px-5 rounded-md shadow-lg">
+          ! {flash.message}
         </div>
       )}
     </div>

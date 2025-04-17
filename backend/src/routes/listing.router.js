@@ -125,9 +125,11 @@ router.post(
 
       await listing.save();
       // res.json(listing);
-      res.status(201).json(listing);
+      res
+        .status(201)
+        .json({ success: true, message: "Listing added successfully!" });
     } catch (err) {
-      console.error("Error:", err);
+      res.json({ success: false, message: err });
       return next(new AppError(500, err.message || "Internal Server Error"));
     }
   }

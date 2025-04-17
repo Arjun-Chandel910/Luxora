@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Card, CardContent, Typography, Box } from "@mui/material";
 import { Button, TextField } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import FlashContext from "../../context/FlashContext";
 
 export default function Signup() {
+  const { showFlash } = useContext(FlashContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     image: "",
@@ -17,24 +19,32 @@ export default function Signup() {
   };
 
   const handleSubmit = async (e) => {
-    const form = new FormData();
-    form.append("image", formData.image);
-    form.append("name", formData.name);
-    form.append("email", formData.email);
-    form.append("password", formData.password);
+    try {
+      e.preventDefault();
+      const form = new FormData();
+      form.append("image", formData.image);
+      form.append("name", formData.name);
+      form.append("email", formData.email);
+      form.append("password", formData.password);
 
-    e.preventDefault();
-    const response = await fetch("http://localhost:3000/api/signup", {
-      method: "POST",
-      body: form,
-    });
-    const data = await response.json();
-    localStorage.setItem("auth-token", data.token);
-    console.log(data.token);
-    navigate("/");
+      const response = await fetch("http://localhost:3000/api/signup", {
+        method: "POST",
+        body: form,
+      });
+      const data = await response.json();
+      if (data.success == false) {
+        showFlash({ success: false, message: data.message });
+      } else {
+        showFlash({ success: true, message: data.message });
+        localStorage.setItem("auth-token", data.token);
+      }
+
+      navigate("/");
+    } catch (err) {
+      showFlash({ success: false, message: err });
+    }
   };
 
-  console.log(formData);
   return (
     <Box className="flex justify-center items-center min-h-screen bg-gray-50 px-6">
       <Card className="w-full max-w-md shadow-2xl rounded-3xl p-10 bg-white">
