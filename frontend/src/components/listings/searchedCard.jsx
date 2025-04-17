@@ -16,7 +16,6 @@ const SearchedCard = () => {
     }
     fetchListings();
   }, [searchQuery, searchListings]);
-
   return (
     <div className="flex justify-evenly gap-4 p-4 flex-row  flex-wrap my-8">
       {listings.map((listing) => {

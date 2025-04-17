@@ -39,6 +39,7 @@ router.get("/s", async (req, res, next) => {
     const listings = await Listing.find({
       location: { $regex: search, $options: "i" },
     });
+    console.log(listings);
 
     res.json(listings);
   } catch (err) {

@@ -8,14 +8,19 @@ const ListingState = ({ children }) => {
 
   //seach listings based on location
   const searchListings = async (location) => {
-    const response = await fetch(
-      `http://localhost:3000/listing/s?search=${location}`,
-      {
-        method: "GET",
-      }
-    );
-    const data = await response.json();
-    return data;
+    try {
+      console.log(location);
+      const response = await fetch(
+        `http://localhost:3000/listing/s?search=${location}`,
+        {
+          method: "GET",
+        }
+      );
+      const data = await response.json();
+      return data;
+    } catch (err) {
+      showFlash({ success: false, message: err });
+    }
   };
 
   //get all listings
