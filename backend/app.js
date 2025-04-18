@@ -8,8 +8,10 @@ const crypto = require("crypto");
 //router
 const ListingRouter = require("./src/routes/listing.router");
 const UserRouter = require("./src/routes/auth.router");
+
 const authMiddleware = require("./src/middlewares/jwt");
 const User = require("./src/models/user.model");
+const Booking = require("./src/models/booking.model");
 
 //middlewares
 app.use(express.json());
@@ -42,6 +44,19 @@ app.post("/payment-success", authMiddleware, async (req, res, next) => {
     let success = true;
     if (correctSignature === razorpay_signature) {
       console.log("authentic payment");
+
+      const updatedBooking = await Booking.findOneAndUpdate(
+        {
+          razorpayOrderId: razorpay_order_id,
+        },
+        {
+          razorpayPaymentId: razorpay_payment_id,
+          razorpaySignature: razorpay_signature,
+          paymentStatus: "PAID",
+        },
+        { new: true }
+      );
+      console.log(updatedBooking);
       res.json({ success });
     } else {
       success = false;

@@ -19,7 +19,7 @@ const ListingState = ({ children }) => {
       const data = await response.json();
       return data;
     } catch (err) {
-      showFlash({ success: false, message: err });
+      console.log(err);
     }
   };
 

@@ -20,7 +20,10 @@ export default function CalenderModal({ id, token }) {
   const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
   const [open, setOpen] = React.useState(false);
 
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => {
+    setOpen(true);
+    document.body.style.overflow = "auto";
+  };
   const handleClose = () => setOpen(false);
   let [bookings, setBookings] = React.useState([]);
 
@@ -95,7 +98,7 @@ export default function CalenderModal({ id, token }) {
       }
     );
     const data = await response.json();
-    console.log(data.razorpayOrderId);
+    console.log(data);
     async function payNow() {
       // Open Razorpay Checkout and the handler function verifies the payment in the backend
       const options = {
@@ -125,8 +128,10 @@ export default function CalenderModal({ id, token }) {
             }),
           });
           const data = await result.json();
+
           if (data.success) {
             console.log("Payment verified");
+
             handleClose();
             navigate("/profile");
           } else {
@@ -149,11 +154,10 @@ export default function CalenderModal({ id, token }) {
       rzp.open();
     }
     payNow();
+    document.body.style.overflow = "auto";
     setTimeout(() => {
       handleClose();
     }, 2000);
-
-    navigate("/profile");
   };
 
   //disabled dates calculation
@@ -174,6 +178,11 @@ export default function CalenderModal({ id, token }) {
       navigate("/login");
     }
   };
+  React.useEffect(() => {
+    return () => {
+      document.body.style.overflow = "auto"; // always restore on unmount
+    };
+  }, []);
 
   return (
     <div>
