@@ -8,6 +8,7 @@ const crypto = require("crypto");
 //router
 const ListingRouter = require("./src/routes/listing.router");
 const UserRouter = require("./src/routes/auth.router");
+const WishList = require("./src/routes/wishlist.router");
 
 const authMiddleware = require("./src/middlewares/jwt");
 const User = require("./src/models/user.model");
@@ -71,6 +72,7 @@ app.post("/payment-success", authMiddleware, async (req, res, next) => {
 //using routes
 app.use("/listing", ListingRouter);
 app.use("/api", UserRouter);
+app.use("/api/wishlist", WishList);
 
 //global error handler to catch the errors
 app.use((err, req, res, next) => {

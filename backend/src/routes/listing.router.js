@@ -1,8 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const Listing = require("../models/listing.model");
-const Review = require("../models/review.model");
 const router = express.Router();
+const Review = require("../models/review.model");
 const AppError = require("../middlewares/AppError");
 const { default: mongoose } = require("mongoose");
 const authMiddleware = require("../middlewares/jwt");
