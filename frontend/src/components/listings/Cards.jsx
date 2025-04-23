@@ -1,84 +1,41 @@
-import * as React from "react";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
+import React from "react";
 import { Link } from "react-router-dom";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 export default function Cards({ data }) {
   const listing = data;
 
   return (
     <Link to={`/${listing._id}`} className="no-underline">
-      <Card
-        sx={{
-          width: 350,
-          height: 400,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          borderRadius: "20px",
-          boxShadow: "0px 4px 15px rgba(0, 0, 0, 0.1)",
-          transition: "transform 0.3s ease-in-out",
-          "&:hover": {
-            transform: "scale(1.05)",
-            boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.15)",
-          },
-        }}
-        className="mx-6 my-4"
-      >
-        <div
-          style={{
-            width: "100%",
-            height: 200,
-            overflow: "hidden",
-            borderTopLeftRadius: "20px",
-            borderTopRightRadius: "20px",
-          }}
-        >
-          <CardMedia
-            component="img"
+      <div className="relative w-[200px] h-[370px] sm:w-[300px] sm:h-[370px]   bg-white rounded-2xl transition-all   hover:shadow-lg transition-transform  my-4 overflow-hidden overflow-y-auto group box-border">
+        {/* image */}
+        <div className="w-full h-3/4 rounded-2xl bg-rose-500 overflow-hidden mb-2">
+          <img
+            src={listing.image.url}
             alt={listing.image.filename}
-            sx={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
+            className="w-full h-full object-cover bg-rose-500 "
+          />
+        </div>
+        <div className="absolute top-2 right-3  ">
+          <FavoriteIcon
+            style={{
+              color: "gray", // fills the heart with gray
+              stroke: "white", // white outline
+              strokeWidth: 1.5,
             }}
-            image={listing.image.url}
           />
         </div>
 
-        <CardContent
-          sx={{
-            flexGrow: 1,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-          className="p-4"
-        >
-          <div>
-            <Typography
-              gutterBottom
-              variant="h6"
-              component="div"
-              className="font-semibold"
-            >
-              {listing.title}
-            </Typography>
-            <Typography variant="body2" className="text-gray-600">
-              {listing.location}
-            </Typography>
-          </div>
-
-          <Typography
-            variant="h6"
-            className="mt-2 text-lg font-bold text-gray-900"
-          >
-            ₹ {listing.price} / night
-          </Typography>
-        </CardContent>
-      </Card>
+        {/* card content */}
+        <div className="p-1 ">
+          <h1 className="">{listing.title}</h1>
+          <h1 className="italic text-gray-600 font-normal text-sm">
+            {listing.location}, {listing.country}
+          </h1>
+          <h1 className="mt-1">&#8377;{listing.price}/ night</h1>
+        </div>
+      </div>
     </Link>
   );
 }
