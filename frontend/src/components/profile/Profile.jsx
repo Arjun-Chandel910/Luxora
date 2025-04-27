@@ -12,7 +12,7 @@ export const Profile = () => {
       const token = localStorage.getItem("auth-token");
       if (!token) return;
 
-      const res = await fetch(`http://localhost:3000/api/profile`, {
+      const response = await fetch(`http://localhost:3000/api/userInfo`, {
         method: "GET",
         headers: {
           "content-type": "application/json",
@@ -20,7 +20,7 @@ export const Profile = () => {
         },
       });
 
-      const data = await res.json();
+      const data = await response.json();
       setUser(data);
 
       const listingRes = await fetch(

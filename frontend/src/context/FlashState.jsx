@@ -3,9 +3,14 @@ import FlashContext from "./FlashContext";
 const FlashState = ({ children }) => {
   const [flash, setFlash] = useState({ type: "", message: "" });
   const showFlash = ({ success, message }) => {
-    if (success) {
+    if (success == success) {
+      //green
       setFlash({ type: "success", message });
+    } else if (success == "normal") {
+      //yellow
+      setFlash({ type: "normal", message });
     } else {
+      //red
       setFlash({ type: "error", message });
     }
     setTimeout(() => {

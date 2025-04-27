@@ -6,7 +6,7 @@ const FlashMsg = () => {
 
   if (!flash.type) return null;
   return (
-    <div className="w-full text-center py-2">
+    <div className="w-full text-center">
       {flash.type === "success" ? (
         <div className="fixed top-6 left-1/2 transform -translate-x-1/2 z-[1000] bg-green-500 text-white font-bold  w-1/3 py-3 px-5 rounded-md shadow-lg">
           ✓ {flash.message}

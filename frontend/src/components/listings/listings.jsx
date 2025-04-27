@@ -8,6 +8,7 @@ const Listings = () => {
   const [listings, setListings] = useState([]);
   const [filteredListings, setFilteredListings] = useState([]);
   const [arr, setArr] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
   //
   useEffect(() => {
     const fetchListing = async () => {
@@ -17,7 +18,25 @@ const Listings = () => {
     };
     fetchListing();
   }, [getListings]);
-  //
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem("auth-token");
+      if (!token) return;
+
+      const response = await fetch(`http://localhost:3000/api/userInfo`, {
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+          "auth-token": `${token}`,
+        },
+      });
+      const data = await response.json();
+      setWishlist(data.wishlist);
+    };
+    fetchUser();
+  }, []);
+
   useEffect(() => {
     if (arr.length > 0) {
       setFilteredListings(
@@ -36,7 +55,7 @@ const Listings = () => {
       {/*  */}
       <div className="flex justify-evenly gap-4 p-4 flex-row flex-wrap my-8">
         {filteredListings.map((listing) => (
-          <Cards data={listing} key={listing._id} />
+          <Cards data={listing} key={listing._id} wishlist={wishlist} />
         ))}
       </div>
     </>

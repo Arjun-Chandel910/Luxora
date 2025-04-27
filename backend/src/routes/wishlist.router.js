@@ -3,6 +3,7 @@ const Listing = require("../models/listing.model");
 const User = require("../models/user.model");
 const AppError = require("../middlewares/AppError");
 const authMiddleware = require("../middlewares/jwt");
+const { trusted } = require("mongoose");
 const router = express.Router();
 
 router.post("/toggle", authMiddleware, async (req, res, next) => {
@@ -23,15 +24,32 @@ router.post("/toggle", authMiddleware, async (req, res, next) => {
     const idx = userF.wishlist.indexOf(listingId);
     if (idx >= 0) {
       userF.wishlist.splice(idx, 1);
+      return res.json({
+        success: false,
+        wishlist: userF.wishlist,
+        message: "Removed from wishlist",
+      });
     } else {
       userF.wishlist.push(listingId);
+      res.json({
+        success: true,
+        wishlist: userF.wishlist,
+        message: "Added to wishlist",
+      });
     }
     await userF.save();
-    return res.status(200).json({
-      success: true,
-      wishlist: userF.wishlist,
-      message: idx >= 0 ? "Removed from wishlist" : "Added to wishlist",
-    });
+  } catch (err) {
+    console.error("Error:", err);
+    return next(new AppError(500, err.message || "Internal Server Error"));
+  }
+});
+router.get("/wishes", authMiddleware, async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+    const userF = await User.findById(userId);
+    if (!userF) {
+      return next(new AppError(403, "InvalidUser"));
+    }
   } catch (err) {
     console.error("Error:", err);
     return next(new AppError(500, err.message || "Internal Server Error"));

@@ -97,8 +97,8 @@ router.delete("/", authMiddleware, async (req, res, next) => {
   }
 });
 
-// user profile
-router.get("/profile", authMiddleware, async (req, res, next) => {
+// userInfo
+router.get("/userInfo", authMiddleware, async (req, res, next) => {
   try {
     const UserId = req.user.id || req.user._id;
     const userF = await User.findById(UserId);

@@ -94,6 +94,7 @@ export default function Filters({ arr, setArr }) {
   return (
     <div className="flex items-center justify-center  space-x-4">
       {/*left arrow */}
+
       <button
         onClick={() => scroll("left")}
         className="p-2 rounded-full shadow-md hover:bg-[#FF5A5F] dark:hover:bg-[#FF5A5F] transition"
