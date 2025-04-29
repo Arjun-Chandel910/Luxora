@@ -22,6 +22,8 @@ import ProtectedRoute from "./components/listings/ProtectedRoute";
 import { Profile } from "./components/profile/Profile";
 import FlashMsg from "./components/flash/FlashMsg";
 import SearchedCard from "./components/listings/searchedCard";
+//wishlist
+import Wishlist from "./components/wishlist/Wishlist";
 
 function App() {
   return (
@@ -44,6 +46,7 @@ function App() {
                   <Route path="/s" element={<SearchedCard />} />
                   <Route path="/login" element={<Login />} />
                   <Route element={<ProtectedRoute />}>
+                    <Route path="/wishes" element={<Wishlist />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/add" element={<AddListing />} />
                     <Route path="/:id/edit" element={<EditForm />} />

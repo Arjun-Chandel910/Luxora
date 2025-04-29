@@ -49,12 +49,15 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-6">
-          <h1>
+          <h1
+            onClick={() => navigate("/wishes")}
+            className="cursor-pointer group relative"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 64 64"
-              width="64"
-              height="64"
+              width="40"
+              height="40"
             >
               <path
                 d="M2 6h10l10 40h32l8-24H16"
@@ -69,6 +72,9 @@ const Navbar = () => {
                 fill="#f00"
               />
             </svg>
+            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block bg-gray-600 text-white text-sm rounded px-2 py-1 shadow-lg z-10">
+              Wishlist
+            </div>
           </h1>
           <h1
             className="cursor-pointer text-white text-lg font-medium px-6 py-2 bg-[#FF385C] rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
