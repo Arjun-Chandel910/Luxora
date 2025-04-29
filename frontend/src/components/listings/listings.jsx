@@ -4,11 +4,13 @@ import ListingContext from "../../context/listingContext";
 import Filters from "./Filters";
 
 const Listings = () => {
-  const { getListings } = useContext(ListingContext);
+  const { getListings, authenticateUser, wishlist, setWishlist } =
+    useContext(ListingContext);
   const [listings, setListings] = useState([]);
   const [filteredListings, setFilteredListings] = useState([]);
   const [arr, setArr] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
+
+  const token = authenticateUser();
   //
   useEffect(() => {
     const fetchListing = async () => {
@@ -35,7 +37,7 @@ const Listings = () => {
       setWishlist(data.wishlist);
     };
     fetchUser();
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (arr.length > 0) {
@@ -48,6 +50,7 @@ const Listings = () => {
       setFilteredListings(listings);
     }
   }, [arr]);
+  console.log(wishlist);
   //
   return (
     <>
@@ -55,7 +58,12 @@ const Listings = () => {
       {/*  */}
       <div className="flex justify-evenly gap-4 p-4 flex-row flex-wrap my-8">
         {filteredListings.map((listing) => (
-          <Cards data={listing} key={listing._id} wishlist={wishlist} />
+          <Cards
+            data={listing}
+            key={listing._id}
+            wishlist={wishlist}
+            setWishlist={setWishlist}
+          />
         ))}
       </div>
     </>

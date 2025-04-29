@@ -24,7 +24,7 @@ router.post("/toggle", authMiddleware, async (req, res, next) => {
     const idx = userF.wishlist.indexOf(listingId);
     if (idx >= 0) {
       userF.wishlist.splice(idx, 1);
-      return res.json({
+      res.json({
         success: false,
         wishlist: userF.wishlist,
         message: "Removed from wishlist",
@@ -38,6 +38,7 @@ router.post("/toggle", authMiddleware, async (req, res, next) => {
       });
     }
     await userF.save();
+    return;
   } catch (err) {
     console.error("Error:", err);
     return next(new AppError(500, err.message || "Internal Server Error"));

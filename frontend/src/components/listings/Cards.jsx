@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ListingContext from "../../context/listingContext";
 import FlashContext from "../../context/FlashContext";
+export default function Cards({ data, wishlist, setWishlist }) {
+  const navigate = useNavigate();
 
-export default function Cards({ data, wishlist }) {
   const { authenticateUser } = useContext(ListingContext);
+  const token = authenticateUser();
   const { showFlash } = useContext(FlashContext);
   const listing = data;
-  const token = authenticateUser();
 
   const [heart, setHeart] = useState(false);
   useEffect(() => {
@@ -20,23 +21,31 @@ export default function Cards({ data, wishlist }) {
   }, [wishlist, listing._id]);
 
   const heartToggle = async (e) => {
-    const response = await fetch("http://localhost:3000/api/wishlist/toggle", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "auth-token": `${token}`,
-      },
-      body: JSON.stringify({ listingId: listing._id }),
-    });
-    setHeart(!heart);
-    const data = await response.json();
-    if (data.success) {
-      showFlash({ success: true, message: "Added to Wishlist!" });
-    } else {
-      showFlash({ success: false, message: "Removed from Wishlist!" });
-    }
+    if (token) {
+      const response = await fetch(
+        "http://localhost:3000/api/wishlist/toggle",
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            "auth-token": `${token}`,
+          },
+          body: JSON.stringify({ listingId: listing._id }),
+        }
+      );
+      setHeart(!heart);
+      const data = await response.json();
+      setWishlist(data.wishlist);
 
-    console.log(data);
+      if (data.success) {
+        showFlash({ success: true, message: "Added to Wishlist!" });
+      } else {
+        showFlash({ success: false, message: "Removed from Wishlist!" });
+      }
+    } else {
+      showFlash({ success: false, message: "You need to be login first!" });
+      navigate("/login");
+    }
   };
 
   return (

@@ -13,6 +13,7 @@ const FlashState = ({ children }) => {
       //red
       setFlash({ type: "error", message });
     }
+
     setTimeout(() => {
       setFlash({ type: "", message: "" });
     }, 3000);

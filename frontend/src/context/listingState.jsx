@@ -1,9 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import ListingContext from "./listingContext";
 import FlashContext from "./FlashContext";
 const ListingState = ({ children }) => {
-  useContext;
   const { showFlash } = useContext(FlashContext);
+  const [wishlist, setWishlist] = useState([]);
+
   //listing methods
 
   //seach listings based on location
@@ -169,6 +170,8 @@ const ListingState = ({ children }) => {
     <ListingContext.Provider
       value={{
         //listings
+        wishlist,
+        setWishlist,
         searchListings,
         getListings,
         getSingleListing,

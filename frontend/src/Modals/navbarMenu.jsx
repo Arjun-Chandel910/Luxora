@@ -8,7 +8,7 @@ import ListingContext from "../context/listingContext";
 
 export default function BasicMenu() {
   const navigate = useNavigate();
-  const { authenticateUser } = React.useContext(ListingContext);
+  const { authenticateUser, setWishlist } = React.useContext(ListingContext);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -24,6 +24,7 @@ export default function BasicMenu() {
     localStorage.removeItem("auth-token");
     handleClose();
     authenticateUser();
+    setWishlist([]);
     navigate("/");
   };
 
