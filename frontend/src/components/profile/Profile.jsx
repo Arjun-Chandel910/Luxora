@@ -81,8 +81,8 @@ export const Profile = () => {
               {userListings.listings.map((d) => {
                 return (
                   <Link to={`/${d._id}`} className="no-underline">
-                    <div className="cursor-pointer  hover:scale-[1.01] bg-white shadow-lg transition flex flex-row justify-between  w-[80%] mx-auto h-30  rounded-4xl overflow-x-auto overflow-y-auto">
-                      <div className="w-1/4">
+                    <div className="cursor-pointer  hover:scale-[1.01] bg-white shadow-lg transition flex flex-col sm:flex-row justify-between  w-[80%] mx-auto h-60 sm:h-30  rounded-4xl overflow-x-auto overflow-y-auto">
+                      <div className="sm:w-1/4">
                         {" "}
                         <img
                           src={d.image.url}
@@ -91,7 +91,7 @@ export const Profile = () => {
                         />
                       </div>
 
-                      <div className="w-3/4  flex-col ml-50 ">
+                      <div className="sm:w-3/4  flex-col p-10 sm:p-0 sm:ml-50 ">
                         <h1 className="text-[#FF385C] text-2xl">{d.title}</h1>
                         <h1 className="text-sm text-gray-500 mb-4 mt-1">
                           {d.location}

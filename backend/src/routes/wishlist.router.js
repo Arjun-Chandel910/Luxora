@@ -47,10 +47,11 @@ router.post("/toggle", authMiddleware, async (req, res, next) => {
 router.get("/wishes", authMiddleware, async (req, res, next) => {
   try {
     const userId = req.user.id;
-    const userF = await User.findById(userId);
+    const userF = await User.findById(userId).populate("wishlist");
     if (!userF) {
       return next(new AppError(403, "InvalidUser"));
     }
+    res.json(userF.wishlist);
   } catch (err) {
     console.error("Error:", err);
     return next(new AppError(500, err.message || "Internal Server Error"));

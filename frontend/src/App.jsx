@@ -33,7 +33,7 @@ function App() {
               <Navbar />
               <Divider />
 
-              <div className="flex-grow mt-20 ">
+              <div className="flex-grow mt-24 ">
                 <FlashMsg />
                 <Routes>
                   <Route path="/" element={<Listings />} />

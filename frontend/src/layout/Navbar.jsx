@@ -49,6 +49,27 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-6">
+          <h1>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 64 64"
+              width="64"
+              height="64"
+            >
+              <path
+                d="M2 6h10l10 40h32l8-24H16"
+                fill="none"
+                stroke="#000"
+                stroke-width="2"
+              />
+              <circle cx="20" cy="54" r="4" fill="#000" />
+              <circle cx="48" cy="54" r="4" fill="#000" />
+              <path
+                d="M32 12c0-4 4-6 6-6s6 2 6 6c0 4-6 8-6 8s-6-4-6-8z"
+                fill="#f00"
+              />
+            </svg>
+          </h1>
           <h1
             className="cursor-pointer text-white text-lg font-medium px-6 py-2 bg-[#FF385C] rounded-full shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105"
             onClick={() => navigate("/add")}
