@@ -21,7 +21,7 @@ import AddListing from "./components/listings/AddListing";
 import ProtectedRoute from "./components/listings/ProtectedRoute";
 import { Profile } from "./components/profile/Profile";
 import FlashMsg from "./components/flash/FlashMsg";
-import SearchedCard from "./components/listings/searchedCard";
+import SearchedCard from "./components/listings/SearchedCardTemp";
 //wishlist
 import Wishlist from "./components/wishlist/Wishlist";
 function App() {
