@@ -25,7 +25,7 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 //connect db
 mongoose
-  .connect(provess.env.MONGO_URI)
+  .connect(process.env.MONGO_URI)
   .then(console.log("db connected"))
   .catch(() => {
     console.log("Error in db");
