@@ -14,7 +14,7 @@ import Signup from "./components/auth/Signup";
 import Login from "./components/auth/Login";
 
 // components
-import Listings from "./components/listings/Listings";
+import Listings from "./components/listings/ListingsTemp";
 import SingleCard from "./components/listings/SingleCard";
 import EditForm from "./components/listings/EditForm";
 import AddListing from "./components/listings/AddListing";
@@ -24,7 +24,6 @@ import FlashMsg from "./components/flash/FlashMsg";
 import SearchedCard from "./components/listings/searchedCard";
 //wishlist
 import Wishlist from "./components/wishlist/Wishlist";
-
 function App() {
   return (
     <>
