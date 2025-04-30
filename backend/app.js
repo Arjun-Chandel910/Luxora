@@ -5,6 +5,8 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 const crypto = require("crypto");
+
+// const port = provess.env.PORT || 3000;
 //router
 const ListingRouter = require("./src/routes/listing.router");
 const UserRouter = require("./src/routes/auth.router");
@@ -17,7 +19,9 @@ const Booking = require("./src/models/booking.model");
 //middlewares
 app.use(express.json());
 app.use(cors());
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(
+  cors({ origin: "https://luxora-lrqz.onrender.com", credentials: true })
+);
 app.use(express.urlencoded({ extended: true }));
 //connect db
 mongoose

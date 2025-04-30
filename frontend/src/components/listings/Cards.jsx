@@ -23,7 +23,7 @@ export default function Cards({ data, wishlist, setWishlist }) {
   const heartToggle = async (e) => {
     if (token) {
       const response = await fetch(
-        "http://localhost:3000/api/wishlist/toggle",
+        `${import.meta.env.VITE_API_BASE_URL}/api/wishlist/toggle`,
         {
           method: "POST",
           headers: {

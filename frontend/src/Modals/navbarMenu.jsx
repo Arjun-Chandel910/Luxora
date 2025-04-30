@@ -27,7 +27,6 @@ export default function BasicMenu() {
     setWishlist([]);
     navigate("/");
   };
-
   let [token, setToken] = React.useState();
   React.useEffect(() => {
     setToken(authenticateUser());

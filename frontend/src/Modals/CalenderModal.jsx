@@ -52,7 +52,7 @@ export default function CalenderModal({ id, token }) {
         return;
       }
       const response = await fetch(
-        `http://localhost:3000/listing/${id}/booking`,
+        `${import.meta.env.VITE_API_BASE_URL}/listing/${id}/booking`,
         {
           method: "GET",
           headers: {
@@ -84,7 +84,7 @@ export default function CalenderModal({ id, token }) {
       return;
     }
     const response = await fetch(
-      `http://localhost:3000/listing/${id}/booking`,
+      `${import.meta.env.VITE_API_BASE_URL}/listing/${id}/booking`,
       {
         method: "POST",
         headers: {
@@ -115,18 +115,21 @@ export default function CalenderModal({ id, token }) {
             console.error("Unauthorized: No token");
             return;
           }
-          const result = await fetch("http://localhost:3000/payment-success", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-              "auth-token": `${token}`,
-            },
-            body: JSON.stringify({
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_signature: response.razorpay_signature,
-            }),
-          });
+          const result = await fetch(
+            `${import.meta.env.VITE_API_BASE_URL}/payment-success`,
+            {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+                "auth-token": `${token}`,
+              },
+              body: JSON.stringify({
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_signature: response.razorpay_signature,
+              }),
+            }
+          );
           const data = await result.json();
 
           if (data.success) {

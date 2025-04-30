@@ -26,13 +26,16 @@ const Listings = () => {
       const token = localStorage.getItem("auth-token");
       if (!token) return;
 
-      const response = await fetch(`http://localhost:3000/api/userInfo`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
-          "auth-token": `${token}`,
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/userInfo`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+            "auth-token": `${token}`,
+          },
+        }
+      );
       const data = await response.json();
       setWishlist(data.wishlist);
     };

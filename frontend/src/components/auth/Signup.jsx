@@ -27,10 +27,13 @@ export default function Signup() {
       form.append("email", formData.email);
       form.append("password", formData.password);
 
-      const response = await fetch("http://localhost:3000/api/signup", {
-        method: "POST",
-        body: form,
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/api/signup`,
+        {
+          method: "POST",
+          body: form,
+        }
+      );
       const data = await response.json();
       if (data.success == false) {
         showFlash({ success: false, message: data.message });

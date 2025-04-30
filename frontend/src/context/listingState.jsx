@@ -12,7 +12,7 @@ const ListingState = ({ children }) => {
     try {
       console.log(location);
       const response = await fetch(
-        `http://localhost:3000/listing/s?search=${location}`,
+        `${import.meta.env.VITE_API_BASE_URL}/listing/s?search=${location}`,
         {
           method: "GET",
         }
@@ -31,18 +31,24 @@ const ListingState = ({ children }) => {
   };
 
   const getListings = async () => {
-    const response = await fetch("http://localhost:3000/listing/all", {
-      method: "GET",
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/listing/all`,
+      {
+        method: "GET",
+      }
+    );
     const data = await response.json();
     return data;
   };
 
   //get a listing
   const getSingleListing = async (id) => {
-    const response = await fetch(`http://localhost:3000/listing/${id}`, {
-      method: "GET",
-    });
+    const response = await fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/listing/${id}`,
+      {
+        method: "GET",
+      }
+    );
     const data = await response.json();
     return data;
   };
@@ -55,21 +61,24 @@ const ListingState = ({ children }) => {
         console.log("Unauthorized: No token");
         return;
       }
-      const response = await fetch(`http://localhost:3000/listing/${id}`, {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-          "auth-token": token,
-        },
-        body: JSON.stringify({
-          title: card.title,
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/listing/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json",
+            "auth-token": token,
+          },
+          body: JSON.stringify({
+            title: card.title,
 
-          description: card.description,
-          price: card.price,
-          country: card.country,
-          location: card.location,
-        }),
-      });
+            description: card.description,
+            price: card.price,
+            country: card.country,
+            location: card.location,
+          }),
+        }
+      );
       const data = await response.json();
       showFlash({ success: data.success, message: data.message });
     } catch (error) {
@@ -87,13 +96,16 @@ const ListingState = ({ children }) => {
       if (!token) {
         return res.status(401).json({ message: "Unauthorized: No token" });
       }
-      const response = fetch(`http://localhost:3000/listing/${id}`, {
-        method: "DELETE",
-        headers: {
-          "content-type": "application/json",
-          "auth-token": `${token}`,
-        },
-      });
+      const response = fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/listing/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "content-type": "application/json",
+            "auth-token": `${token}`,
+          },
+        }
+      );
       showFlash({ success: true, message: "Listing deleted!" });
     } catch (err) {
       showFlash({
@@ -110,13 +122,16 @@ const ListingState = ({ children }) => {
       if (!token) {
         return res.status(401).json({ message: "Unauthorized: No token" });
       }
-      const response = await fetch("http://localhost:3000/listing/add", {
-        method: "POST",
-        headers: {
-          "auth-token": `${token}`,
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/listing/add`,
+        {
+          method: "POST",
+          headers: {
+            "auth-token": `${token}`,
+          },
+          body: formData,
+        }
+      );
       const data = await response.json();
       showFlash({ success: data.success, message: data.message });
     } catch (err) {
@@ -129,7 +144,7 @@ const ListingState = ({ children }) => {
   //review
   const getReviews = async (id) => {
     const response = await fetch(
-      `http://localhost:3000/listing/${id}/allReviews`,
+      `${import.meta.env.VITE_API_BASE_URL}/listing/${id}/allReviews`,
       {
         method: "GET",
       }
@@ -147,7 +162,7 @@ const ListingState = ({ children }) => {
         return res.status(401).json({ message: "Unauthorized: No token" });
       }
       const response = await fetch(
-        `http://localhost:3000/listing/${id}/review`,
+        `${import.meta.env.VITE_API_BASE_URL}/listing/${id}/review`,
         {
           method: "POST",
           headers: {
