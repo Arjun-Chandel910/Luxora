@@ -15,18 +15,18 @@ const WishList = require("./src/routes/wishlist.router");
 const authMiddleware = require("./src/middlewares/jwt");
 const User = require("./src/models/user.model");
 const Booking = require("./src/models/booking.model");
-
+const port = process.env.PORT || 3000;
 //middlewares
 app.use(express.json());
-app.use(cors());
+
 app.use(
-  cors({ origin: "https://luxora-lrqz.onrender.com", credentials: true })
+  cors({ origin: "https://luxora-frontend.onrender.com", credentials: true })
 );
 app.use(express.urlencoded({ extended: true }));
 //connect db
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(console.log("db connected"))
+  .then(() => console.log("DB connected"))
   .catch(() => {
     console.log("Error in db");
   });
@@ -85,6 +85,6 @@ app.use((err, req, res, next) => {
 });
 
 //listen
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log("server litening to port 3000");
 });
