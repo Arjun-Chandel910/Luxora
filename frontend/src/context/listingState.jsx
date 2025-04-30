@@ -38,6 +38,12 @@ const ListingState = ({ children }) => {
       }
     );
     const data = await response.json();
+    console.log("DATA RECEIVED:", data); // check the real response
+    if (Array.isArray(data)) {
+      // good to go
+    } else {
+      console.error("Data is not an array:", data);
+    }
     return data;
   };
 
