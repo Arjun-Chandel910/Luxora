@@ -25,11 +25,19 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 //connect db
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("DB connected"))
   .catch(() => {
     console.log("Error in db");
   });
+
+mongoose.set("bufferCommands", false); // Disable buffering (optional)
+mongoose.set("connectTimeoutMS", 30000); // Set a longer connection timeout (30 seconds)
+mongoose.set("socketTimeoutMS", 30000);
+
 app.post("/payment-success", authMiddleware, async (req, res, next) => {
   try {
     const UserId = req.user.id || req.user._id;
