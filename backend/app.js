@@ -25,15 +25,15 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 //connect db
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("DB connected"))
-  .catch(() => {
-    console.log("Error in db");
+  .then(() => console.log("🔥 MongoDB connected"))
+  .catch((err) => {
+    console.error("💥 MongoDB connection error:", err);
+    process.exit(1); // crash hard so you fix it
   });
-
 
 app.post("/payment-success", authMiddleware, async (req, res, next) => {
   try {
