@@ -21,7 +21,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "https://luxora-frontend.onrender.com",
     // ← must match req header exactly
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true, // if you send cookies/auth headers
