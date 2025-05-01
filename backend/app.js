@@ -34,9 +34,6 @@ mongoose
     console.log("Error in db");
   });
 
-mongoose.set("bufferCommands", false); // Disable buffering (optional)
-mongoose.set("connectTimeoutMS", 30000); // Set a longer connection timeout (30 seconds)
-mongoose.set("socketTimeoutMS", 30000);
 
 app.post("/payment-success", authMiddleware, async (req, res, next) => {
   try {
