@@ -24,15 +24,16 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true }));
 //connect db
+const uri = process.env.MONGODB_URI;
+if (!uri) {
+  console.error("💥 MONGODB_URI is not defined!");
+  process.exit(1);
+}
 mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("🔥 MongoDB connected"))
   .catch((err) => {
-    console.error("💥 MongoDB connection error:", err);
-    process.exit(1); // crash hard so you fix it
+    throw err;
   });
 
 app.post("/payment-success", authMiddleware, async (req, res, next) => {
