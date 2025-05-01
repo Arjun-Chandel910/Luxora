@@ -20,20 +20,21 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 app.use(
-  cors({ origin: "https://luxora-frontend.onrender.com", credentials: true })
+  cors({
+    origin: "http://localhost:5173",
+    // ← must match req header exactly
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true, // if you send cookies/auth headers
+  })
 );
 app.use(express.urlencoded({ extended: true }));
 //connect db
-const uri = process.env.MONGODB_URI;
-if (!uri) {
-  console.error("💥 MONGODB_URI is not defined!");
-  process.exit(1);
-}
 mongoose
-  .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGODB_URI, { dbName: "luxora" })
   .then(() => console.log("🔥 MongoDB connected"))
   .catch((err) => {
-    throw err;
+    console.error("💥 MongoDB connection error:", err);
+    process.exit(1);
   });
 
 app.post("/payment-success", authMiddleware, async (req, res, next) => {

@@ -51,11 +51,11 @@ export default function Cards({ data, wishlist, setWishlist }) {
   return (
     <div className="relative w-[200px] h-[370px] sm:w-[300px] sm:h-[370px]   bg-white rounded-2xl transition-all   hover:shadow-lg transition-transform  my-4 overflow-hidden overflow-y-auto group box-border">
       {/* image */}
-      <div className="w-full h-3/4 rounded-2xl bg-rose-500 overflow-hidden mb-2">
+      <div className="w-full h-3/4 rounded-2xl  overflow-hidden mb-2">
         <Link to={`/${listing._id}`} className="no-underline">
           <img
-            src={listing.image.url}
-            alt={listing.image.filename}
+            src={listing.image?.url}
+            alt={listing.image?.filename}
             className="w-full h-full object-cover bg-rose-500 "
           />
         </Link>

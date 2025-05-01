@@ -20,6 +20,7 @@ const upload = multer({ storage });
 router.get("/all", async (req, res, next) => {
   try {
     const allListings = await Listing.find({});
+    console.log(allListings);
     res.json(allListings);
   } catch (err) {
     console.error("Error:", err);
