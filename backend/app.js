@@ -21,19 +21,21 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://luxora-frontend.onrender.com",
-    // ← must match req header exactly
+    origin: "http://localhost:5173",
+    // origin: "https://luxora-frontend.onrender.com",
+
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    credentials: true, // if you send cookies/auth headers
+    credentials: true,
   })
 );
 app.use(express.urlencoded({ extended: true }));
+
 //connect db
 mongoose
   .connect(process.env.MONGODB_URI, { dbName: "luxora" })
-  .then(() => console.log("🔥 MongoDB connected"))
+  .then(() => console.log("MongoDB connected"))
   .catch((err) => {
-    console.error("💥 MongoDB connection error:", err);
+    console.error("MongoDB connection error:", err);
     process.exit(1);
   });
 

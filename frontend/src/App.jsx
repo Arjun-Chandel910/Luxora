@@ -34,11 +34,10 @@ function App() {
               <Navbar />
               <Divider />
 
-              <div className="flex-grow mt-24 ">
+              <div className="flex-grow lg:mt-24 mt-50">
                 <FlashMsg />
                 <Routes>
                   <Route path="/" element={<Listings />} />
-
                   <Route path="/:id" element={<SingleCard />} />
                   <Route path="/signup" element={<Signup />} />
                   <Route path="/login" element={<Login />} />

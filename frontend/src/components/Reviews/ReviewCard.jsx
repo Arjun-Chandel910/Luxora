@@ -4,7 +4,7 @@ import ProfileModal from "../../Modals/ProfileModal";
 
 const ReviewCard = ({ item }) => {
   return (
-    <div className="w-[350px] h-[180px] bg-white shadow-lg rounded-2xl p-5 flex flex-col justify-between border border-gray-200">
+    <div className="w-[250px] h-[120px] sm:w-[300px] sm:h-[140px] bg-white shadow-lg rounded-2xl p-5 flex flex-col justify-between border border-gray-200">
       <div className="flex items-center gap-4">
         <ProfileModal item={item}></ProfileModal>
         <h1 className="text-sm  text-gray-500 italic ">{item.user.name}</h1>
