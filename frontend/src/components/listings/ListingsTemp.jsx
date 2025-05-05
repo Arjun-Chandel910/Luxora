@@ -1,7 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import Cards from "./Cards";
+import React, { Suspense, useContext, useEffect, useState } from "react";
 import ListingContext from "../../context/listingContext";
 import Filters from "./Filters";
+
+// Lazy load the Cards component
+const Cards = React.lazy(() => import("./Cards"));
 
 const Listings = () => {
   const { getListings, authenticateUser, wishlist, setWishlist } =
@@ -9,14 +11,16 @@ const Listings = () => {
   const [listings, setListings] = useState([]);
   const [filteredListings, setFilteredListings] = useState([]);
   const [arr, setArr] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const token = authenticateUser();
-  //
+
   useEffect(() => {
     const fetchListing = async () => {
       const data = await getListings();
       setListings(data);
       setFilteredListings(data);
+      setIsLoading(false); // Stop loading after data is fetched
     };
     fetchListing();
   }, [getListings]);
@@ -53,22 +57,26 @@ const Listings = () => {
       setFilteredListings(listings);
     }
   }, [arr]);
-  console.log(wishlist);
-  //
+
   return (
     <>
       <Filters arr={arr} setArr={setArr} />
-      {/*  */}
-      <div className="flex justify-evenly gap-4 p-4 flex-row flex-wrap my-8">
-        {filteredListings.map((listing) => (
-          <Cards
-            data={listing}
-            key={listing._id}
-            wishlist={wishlist}
-            setWishlist={setWishlist}
-          />
-        ))}
-      </div>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <div className="flex justify-evenly gap-4 p-4 flex-row flex-wrap my-8">
+          <Suspense fallback={<div>Loading Cards...</div>}>
+            {filteredListings.map((listing) => (
+              <Cards
+                data={listing}
+                key={listing._id}
+                wishlist={wishlist}
+                setWishlist={setWishlist}
+              />
+            ))}
+          </Suspense>
+        </div>
+      )}
     </>
   );
 };

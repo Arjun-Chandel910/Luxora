@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import ListingContext from "../../context/listingContext";
 import { Link } from "react-router-dom";
-export const Profile = () => {
+const Profile = () => {
   const { authenticateUser } = useContext(ListingContext);
   const token = authenticateUser();
   const [user, setUser] = useState({});
@@ -112,3 +112,5 @@ export const Profile = () => {
     </div>
   );
 };
+
+export default Profile;
