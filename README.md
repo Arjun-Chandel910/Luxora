@@ -2,7 +2,9 @@
 
 > **Luxora** is a premium full-stack hospitality booking platform that redefines the way users discover, book, and host stays across the globe. With a sleek interface, seamless user experience, and powerful backend, Luxora is crafted to deliver elegance, performance, and ease – all in one platform.
 
+![image](https://github.com/user-attachments/assets/001b7779-1a0e-4e40-a0eb-7d2fdd7471b3)
 
+![image](https://github.com/user-attachments/assets/1489f07f-70f4-4c58-8314-22b950666ae4)
 
 ---
 
