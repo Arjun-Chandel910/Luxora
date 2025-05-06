@@ -4,21 +4,23 @@
 
 🔗 **Live Site**: [https://luxora-frontend.onrender.com](https://luxora-frontend.onrender.com)
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/001b7779-1a0e-4e40-a0eb-7d2fdd7471b3" style="width: 45%; height: 300px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" />
-  &nbsp; &nbsp;
-  <img src="https://github.com/user-attachments/assets/1489f07f-70f4-4c58-8314-22b950666ae4" style="width: 45%; height: 300px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" />
-</p>
+---
 
-<br />
+## 📸 Showcase
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/fbc8a4ec-7301-42d5-be12-a0995f448aae" style="width: 45%; height: 300px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" />
+  <img src="https://github.com/user-attachments/assets/001b7779-1a0e-4e40-a0eb-7d2fdd7471b3" width="45%" />
   &nbsp; &nbsp;
-  <img src="https://github.com/user-attachments/assets/fda8afdb-c3d4-460d-bc98-422a1b804e06" style="width: 45%; height: 300px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.2);" />
+  <img src="https://github.com/user-attachments/assets/1489f07f-70f4-4c58-8314-22b950666ae4" width="45%" />
 </p>
 
+<br/>
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/fbc8a4ec-7301-42d5-be12-a0995f448aae" width="45%" />
+  &nbsp; &nbsp;
+  <img src="https://github.com/user-attachments/assets/fda8afdb-c3d4-460d-bc98-422a1b804e06" width="45%" />
+</p>
 
 ---
 
@@ -130,4 +132,3 @@ npm install
 
 # Run both client and server (use concurrently or in two terminals)
 npm run dev
-
