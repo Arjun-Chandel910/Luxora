@@ -1,3 +1,4 @@
+
 🏡 Luxora – Hospitality Booking Platform
 Luxora is a premium full-stack hospitality booking platform that redefines the way users discover, book, and host stays across the globe. With a sleek interface, seamless user experience, and powerful backend, Luxora is crafted to deliver elegance, performance, and ease – all in one platform.
 
@@ -32,7 +33,7 @@ Backend: Node.js, Express.js, MongoDB, Mongoose
 
 Authentication: JWT (Stored in Local Storage)
 
-Deployment: Vercel (Frontend), Render/Heroku (Backend), MongoDB Atlas
+Deployment: Render, MongoDB Atlas
 
 Dev Tools: Postman, Git, VSCode
 
@@ -41,18 +42,15 @@ bash
 Copy
 Edit
 luxora/
-├── client/         # React frontend
+├── frontend/         # React frontend
 │   ├── components/ # Reusable UI Components
 │   └── pages/      # Core app pages (Home, Listings, Profile, etc.)
-├── server/         # Node.js backend
+├── backend/         # Node.js backend
 │   ├── routes/     # API endpoints
 │   ├── controllers/# Business logic
 │   └── models/     # Mongoose schemas
 └── README.md
 📸 Demo Preview
-Drop your project screenshots, feature gifs, or UI highlights below:
-
-![Luxora Preview](./assets/demo-preview.png)
 
 🛠️ How to Run Locally
 bash
