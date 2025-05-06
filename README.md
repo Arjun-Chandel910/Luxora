@@ -115,3 +115,18 @@ luxora/
 │   ├── controllers/  # Business logic
 │   └── models/       # Mongoose schemas
 └── README.md
+
+# Clone the repository
+git clone https://github.com/yourusername/luxora.git
+
+# Install frontend dependencies
+cd frontend
+npm install
+
+# Install backend dependencies
+cd ../backend
+npm install
+
+# Run both client and server (use concurrently or in two terminals)
+npm run dev
+
