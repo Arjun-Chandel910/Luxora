@@ -1,48 +1,57 @@
+# 🏡 Luxora – Hospitality Booking Platform
 
-🏡 Luxora – Hospitality Booking Platform
-Luxora is a premium full-stack hospitality booking platform that redefines the way users discover, book, and host stays across the globe. With a sleek interface, seamless user experience, and powerful backend, Luxora is crafted to deliver elegance, performance, and ease – all in one platform.
+> **Luxora** is a premium full-stack hospitality booking platform that redefines the way users discover, book, and host stays across the globe. With a sleek interface, seamless user experience, and powerful backend, Luxora is crafted to deliver elegance, performance, and ease – all in one platform.
 
 
-Replace the above line with your actual screenshot path.
 
-🚀 Key Features
-🔐 Secure Authentication – Register, login, and stay authenticated with JWT.
+---
 
-🏠 Host Listings – Users can create, edit, and manage their property listings.
+## 🚀 Key Features
 
-🌍 Location Search – Real-time search with smart location filtering.
+- 🔐 **Secure Authentication** – Register, login, and stay authenticated with JWT.
+![image](https://github.com/user-attachments/assets/c8267abb-a50f-41c6-be9c-f358c1777a44)
 
-🧭 Interactive Maps – View listings on a map with geolocation features.
+ 
+- 🏠 **Host Listings** – Users can create, edit, and manage their property listings.
+- ![image](https://github.com/user-attachments/assets/6aff2b29-d25e-4697-892d-4f14ca78fd0c)
 
-📸 Image Uploads – Upload high-quality listing images (Cloudinary integration optional).
+-  
+- 🌍 **Location Search** – Real-time search with smart location filtering.
+- 
+- 🧭 **Interactive Maps** – View listings on a map with geolocation features.
+- ![image](https://github.com/user-attachments/assets/d613aee2-f6bb-4299-8874-473cecd07c76)
 
-👤 User Profile Pages – Personalized dashboard showing user's info and listings.
+- 📸 **Image Uploads** – Upload high-quality listing images (Cloudinary integration optional).  
+- 👤 **User Profile Pages** – Personalized dashboard showing user's info and listings.
+- ![image](https://github.com/user-attachments/assets/08407c2a-9669-4261-868d-f66653e65f11)
+![image](https://github.com/user-attachments/assets/13140c42-b816-4b25-9d6c-ca758bd85c8d)
+ 
+- 💳 **Integrated Payments** – Razorpay (test mode) payment flow for smooth transactions.
+- ![image](https://github.com/user-attachments/assets/869d7cf0-c94e-42fd-99ce-229cf43b894d)
 
-💳 Integrated Payments – Razorpay (test mode) payment flow for smooth transactions.
+- 📱 **Responsive UI** – Fully mobile-optimized with a luxurious, minimal aesthetic.  
+- 🧱 **Modular Codebase** – Clean folder structure and reusable components for scalability.  
+- 📅 **Booking System (Coming Soon)** – Full-featured booking calendar and availability logic.
+- ![image](https://github.com/user-attachments/assets/66fbd379-5408-41f8-808b-c83f4bdb1be3)
 
-📱 Responsive UI – Fully mobile-optimized with a luxurious, minimal aesthetic.
 
-🧱 Modular Codebase – Clean folder structure and reusable components for scalability.
+---
 
-📅 Booking System (Coming Soon) – Full-featured booking calendar and availability logic.
+## 🧰 Tech Stack
 
-🧰 Tech Stack
-Frontend: React, TailwindCSS, Axios, React Router
+- **Frontend**: React, TailwindCSS, Axios, React Router  
+- **Backend**: Node.js, Express.js, MongoDB, Mongoose  
+- **Authentication**: JWT (Stored in Local Storage)  
+- **Deployment**: Vercel (Frontend), Render/Heroku (Backend), MongoDB Atlas  
+- **Dev Tools**: Postman, Git, VSCode  
 
-Backend: Node.js, Express.js, MongoDB, Mongoose
+---
 
-Authentication: JWT (Stored in Local Storage)
+## 📁 Folder Structure
 
-Deployment: Render, MongoDB Atlas
-
-Dev Tools: Postman, Git, VSCode
-
-📁 Folder Structure
-bash
-Copy
-Edit
+```bash
 luxora/
-├── frontend/         # React frontend
+├── fronend/         # React frontend
 │   ├── components/ # Reusable UI Components
 │   └── pages/      # Core app pages (Home, Listings, Profile, etc.)
 ├── backend/         # Node.js backend
@@ -50,22 +59,3 @@ luxora/
 │   ├── controllers/# Business logic
 │   └── models/     # Mongoose schemas
 └── README.md
-📸 Demo Preview
-
-🛠️ How to Run Locally
-bash
-Copy
-Edit
-# Clone the repo
-git clone https://github.com/yourusername/luxora.git
-
-# Navigate into client and install frontend deps
-cd client
-npm install
-
-# Navigate to server and install backend deps
-cd ../backend
-npm install
-
-# Run both servers (use concurrently or separate terminals)
-npm run dev
