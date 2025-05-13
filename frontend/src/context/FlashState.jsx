@@ -3,7 +3,7 @@ import FlashContext from "./FlashContext";
 const FlashState = ({ children }) => {
   const [flash, setFlash] = useState({ type: "", message: "" });
   const showFlash = ({ success, message }) => {
-    if (success == success) {
+    if (success == true) {
       //green
       setFlash({ type: "success", message });
     } else {

@@ -25,9 +25,13 @@ export default function Login() {
         }
       );
       const data = await response.json();
-      showFlash({ success: data.success, message: data.message });
-      localStorage.setItem("auth-token", data.token);
-      navigate("/");
+      if (data.success) {
+        showFlash({ success: true, message: data.message });
+        localStorage.setItem("auth-token", data.token);
+        navigate("/");
+      } else {
+        showFlash({ success: false, message: "Invalid credentials" });
+      }
     } catch (err) {
       showFlash({ success: false, message: err });
     }
@@ -52,6 +56,7 @@ export default function Login() {
                 type="email"
                 name="email"
                 label="Email Address"
+                required
                 variant="outlined"
                 fullWidth
                 value={form.email}
@@ -61,6 +66,7 @@ export default function Login() {
             </div>
             <div className="mb-6">
               <TextField
+                required
                 type="password"
                 name="password"
                 label="Password"
